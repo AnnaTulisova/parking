@@ -1,5 +1,7 @@
-package com.tulisova.parking.dao.model.dto;
+package com.tulisova.parking.service.dto;
 
+import com.tulisova.parking.service.validation.PasswordMatches;
+import com.tulisova.parking.service.validation.ValidEmail;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -7,6 +9,7 @@ import javax.validation.constraints.*;
 
 @Data
 @Accessors(chain = true)
+@PasswordMatches
 public class UserDto {
     @NotNull @NotEmpty
     private String firstName;
@@ -21,11 +24,9 @@ public class UserDto {
     private String matchingPassword;
 
     @NotNull @NotEmpty
-    private String carNumber;
-
-    @NotNull @NotEmpty
     private String phone;
 
+    @ValidEmail
     @NotNull @NotEmpty
     private String email;
 }
