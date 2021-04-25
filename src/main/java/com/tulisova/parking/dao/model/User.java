@@ -8,10 +8,9 @@ import org.springframework.security.core.userdetails.*;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity(name = "USER")
+@Entity
 @Data
 @Accessors(chain = true)
-//@Table(name = "\"user\"")
 public class User implements UserDetails
 {
     @Id

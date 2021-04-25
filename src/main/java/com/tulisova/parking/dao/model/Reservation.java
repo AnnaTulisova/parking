@@ -7,6 +7,7 @@ import org.springframework.format.annotation.*;
 import javax.persistence.*;
 import java.time.*;
 
+@Entity
 @Data
 @Accessors(chain = true)
 public class Reservation {
@@ -27,4 +28,7 @@ public class Reservation {
 
     @OneToOne
     private Location location;
+
+    @OneToOne
+    private Place place;
 }

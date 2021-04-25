@@ -5,50 +5,38 @@
     <title>Забронировано!</title>
 </head>
 <body>
-    <h1>Вше место успешно забронировано!</h1>
-    <form action="/" object="${reservation}" method="GET" enctype="utf8">
-        <div>
-            <label th:text="#{label.reservation.user.firstName}">Имя</label>
-            <input th:field="*{carNumber}"/>
-            <p th:each="error: ${#fields.errors('carNumber')}"
-               th:text="${error}">Validation error</p>
-        </div>
-        <div>
-            <label th:text="#{label.reservation.user.lastName}">Фамилия</label>
-            <input th:field="*{carNumber}"/>
-            <p th:each="error: ${#fields.errors('carNumber')}"
-               th:text="${error}">Validation error</p>
-        </div>
-        <div>
-            <label th:text="#{label.reservation.user.phone}">Номер телефона</label>
-            <input th:field="*{carNumber}"/>
-            <p th:each="error: ${#fields.errors('carNumber')}"
-               th:text="${error}">Validation error</p>
-        </div>
-        <div>
-            <label th:text="#{label.reservation.carNumber}">Номер автомобиля</label>
-            <input th:field="*{carNumber}"/>
-            <p th:each="error: ${#fields.errors('carNumber')}"
-               th:text="${error}">Validation error</p>
-        </div>
-        <div>
-            <label th:text="#{label.reservation.startDateTime}">Время начала бронирования</label>
-            <input type="datetime-local" th:field="*{startDateTime}"/>
-            <p th:each="error : ${#fields.errors('startDateTime')}"
-               th:text="${error}">Validation error</p>
-        </div>
-        <div>
-            <label th:text="#{label.reservation.endDateTime}">Время окончания бронирования</label>
-            <input type="datetime-local" th:field="*{endDateTime}"/>
-            <p th:each="error : ${#fields.errors('endDateTime')}"
-               th:text="${error}">Validation error</p>
-        </div>
-        <div>
-            <label th:text="#{label.reservation.location}">Расположение</label>
-            <input th:field="*{location}"/>
-            <p th:each="error : ${#fields.errors('location')}"
-               th:text="${error}">Validation error</p>
-        </div>
-    </form>
+    <h1>Ваше место успешно забронировано!</h1>
+<!--    <form action="/" object="${reservation}" method="GET" enctype="utf8">-->
+<!--        <div>-->
+<!--            <label>Номер автомобиля</label>-->
+<!--            <input th:field="*{carNumber}"/>-->
+<!--            <p th:each="error: ${#fields.errors('carNumber')}"-->
+<!--               th:text="${error}">Validation error</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label>Время начала бронирования</label>-->
+<!--            <input type="datetime-local" th:field="*{startDateTime}"/>-->
+<!--            <p th:each="error : ${#fields.errors('startDateTime')}"-->
+<!--               th:text="${error}">Validation error</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label>Время окончания бронирования</label>-->
+<!--            <input type="datetime-local" th:field="*{endDateTime}"/>-->
+<!--            <p th:each="error : ${#fields.errors('endDateTime')}"-->
+<!--               th:text="${error}">Validation error</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label>Расположение</label>-->
+<!--            <input th:field="*{location}"/>-->
+<!--            <p th:each="error : ${#fields.errors('location')}"-->
+<!--               th:text="${error}">Validation error</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--            <label>Место</label>-->
+<!--            <input th:field="*{place}"/>-->
+<!--            <p th:each="error : ${#fields.errors('place')}"-->
+<!--               th:text="${error}">Validation error</p>-->
+<!--        </div>-->
+<!--    </form>-->
 </body>
 </html>

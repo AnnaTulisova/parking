@@ -1,30 +1,26 @@
 package com.tulisova.parking.service.dto;
 
+import com.tulisova.parking.dao.model.*;
+import lombok.*;
+import lombok.experimental.*;
+import org.springframework.format.annotation.*;
+
 import javax.validation.constraints.*;
 import java.time.*;
-
+@Data
+@Accessors(chain = true)
 public class ReservationDto {
-    @NotNull
-    @NotEmpty
-    private Long UserId;
 
-    @NotNull
-    @NotEmpty
     private String carNumber;
 
-    @NotNull
-    @NotEmpty
-    private LocalDateTime startDateTime;
+    @DateTimeFormat(pattern = "yy-MM-dd HH:mm")
+    private String startDateTime;
 
-    @NotNull
-    @NotEmpty
-    private LocalDateTime endDateTime;
+    @DateTimeFormat(pattern = "yy-MM-dd HH:mm")
+    private String endDateTime;
 
-    @NotNull
-    @NotEmpty
-    private Long locationId;
+    private Location location;
 
-    @NotNull
-    @NotEmpty
-    private Long placeId;
+    private Place place;
+
 }
