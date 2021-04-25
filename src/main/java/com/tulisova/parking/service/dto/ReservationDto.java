@@ -1,9 +1,7 @@
-package com.tulisova.parking.dao.model.dto;
+package com.tulisova.parking.service.dto;
 
 import javax.validation.constraints.*;
 import java.time.*;
-
-import lombok.*;
 
 public class ReservationDto {
     @NotNull
