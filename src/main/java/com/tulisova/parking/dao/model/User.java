@@ -11,10 +11,11 @@ import java.util.*;
 @Entity
 @Data
 @Accessors(chain = true)
+//@Table(name = "\"user\"")
 public class User implements UserDetails
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String firstName;

@@ -11,7 +11,7 @@ import java.time.*;
 @Accessors(chain = true)
 public class Reservation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")

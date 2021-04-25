@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Setter @NoArgsConstructor
 public class Place {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     String name;

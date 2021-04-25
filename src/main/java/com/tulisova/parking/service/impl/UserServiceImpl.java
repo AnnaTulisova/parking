@@ -20,20 +20,31 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User registerNewUserAccount(UserDto userDto) throws UserAlreadyExistsException {
-        if (userRepository.existByEmail(userDto.getEmail())) {
+        /*if (userRepository.existByEmail(userDto.getEmail())) {
             throw new UserAlreadyExistsException(userDto.getEmail());
-        }
+        }*/
 
         return new User();
     }
 
     @Override
     public boolean emailExist(String email) {
-        return userRepository.existByEmail(email);
+        return false;
     }
 
     @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return null;
+    }
+
+    /*@Override
+    public boolean emailExist(String email) {
+        return userRepository.existByEmail(email);
+    }*/
+
+    /*@Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         return userRepository.findByEmail(userName);
     }
+     */
 }

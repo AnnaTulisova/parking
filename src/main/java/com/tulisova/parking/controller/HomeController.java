@@ -1,6 +1,5 @@
 package com.tulisova.parking.controller;
 
-import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.dao.model.dto.*;
 import com.tulisova.parking.dao.repository.*;
 import com.tulisova.parking.service.*;
@@ -9,7 +8,6 @@ import org.springframework.ui.*;
 import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.*;
-import org.springframework.web.servlet.*;
 
 import javax.servlet.http.*;
 import javax.validation.*;
@@ -34,13 +32,14 @@ public class HomeController {
     }
 
     @PostMapping("/user/registration")
-    public ModelAndView registerUserAccount(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors) {
-        try {
+    public String registerUserAccount(@ModelAttribute("user") @Valid UserDto userDto, HttpServletRequest request, Errors errors) {
+        /*try {
             User registered = userService.registerNewUserAccount(userDto);
         } catch (UserAlreadyExistException uaeEx) {
             uaeEx(userDto.getEmail());
             return uaeEx;
-        }
+        }*/
+        return "canceled";
 
     }
 

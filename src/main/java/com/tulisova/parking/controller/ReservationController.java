@@ -16,8 +16,9 @@ import javax.validation.*;
 @RestController
 public class ReservationController {
 
-    @Autowired
+    /*@Autowired
     ReservationRepository reservationRepository;
+     */
 
 
     @GetMapping("/reservation/reservation")
@@ -29,19 +30,20 @@ public class ReservationController {
 
     @PostMapping("/reservation/reservation")
     public ModelAndView addReservation(@ModelAttribute("reservation") @Valid ReservationDto reservationDto, HttpServletRequest request, Errors errors) {
-        try {
+        /*try {
             User registered = reservationRepository.registerNewUserAccount(reser);
         } catch (UserAlreadyExistException uaeEx) {
             uaeEx(reser.getEmail());
             return uaeEx;
         }
-
+*/
+        return new ModelAndView();
     }
 
     @GetMapping("/reservation/reservationResult")
     public String getReservationResult(WebRequest request, Model model) {
         ReservationDto reservationDto = new ReservationDto();
-        Reservation dbReservation = reservationRepository.findById();
+        //Reservation dbReservation = reservationRepository.findById();
         model.addAttribute("user", reservationDto);
         return "reservationResult";
     }
