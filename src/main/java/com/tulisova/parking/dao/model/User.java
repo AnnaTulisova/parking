@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.*;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
+@Entity(name = "USER")
 @Data
 @Accessors(chain = true)
 public class User implements UserDetails
