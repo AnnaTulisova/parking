@@ -1,33 +1,31 @@
 package com.tulisova.parking.dao.model.dto;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.*;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@Accessors(chain = true)
 public class UserDto {
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     private String firstName;
 
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     private String lastName;
 
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     private String password;
+
+    @NotNull @NotEmpty
     private String matchingPassword;
 
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     private String carNumber;
 
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     private String phone;
 
-    @NotNull
-    @NotEmpty
+    @NotNull @NotEmpty
     private String email;
 }

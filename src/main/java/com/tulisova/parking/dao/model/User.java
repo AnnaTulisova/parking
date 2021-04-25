@@ -32,10 +32,6 @@ public class User implements UserDetails
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-//    @OneToMany
-//    @JoinColumn(name = "userId")
-//    private List<Car> cars;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

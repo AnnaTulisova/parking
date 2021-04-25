@@ -22,10 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @PostConstruct
     public void init() {
-        users = Map.of("fox", new User()
-                .setId(0)
-                .setEmail("fox").setPassword("$2a$10$xPHX13ereSkSkoCCm9XRB.y7vz6QjSs1jhLSQBYKuqK9tguqPWw0C")
-                .setRoles(Set.of(Role.USER))
+        users = Map.of("fox",
+                new User()
+                        .setId(0)
+                        .setEmail("fox")
+                        .setPassword("$2a$10$xPHX13ereSkSkoCCm9XRB.y7vz6QjSs1jhLSQBYKuqK9tguqPWw0C")
+                        .setRoles(Set.of(Role.USER))
         );
     }
 

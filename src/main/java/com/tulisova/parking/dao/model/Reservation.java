@@ -1,32 +1,30 @@
 package com.tulisova.parking.dao.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.format.annotation.*;
 
 import javax.persistence.*;
 import java.time.*;
 
-@Getter @Setter @NoArgsConstructor
+@Data
+@Accessors(chain = true)
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-    private LocalDateTime startDatetime;
+    private LocalDateTime startDateTime;
+
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
-    private LocalDateTime endDatetime;
+    private LocalDateTime endDateTime;
+
+    private String carNumber;
 
     @OneToOne
     private User user;
 
     @OneToOne
-    private Car car;
-
-    public Reservation(Integer id, LocalDateTime startDatetime, LocalDateTime endDatetime, User user, Car car) {
-        this.id = id;
-        this.startDatetime = startDatetime;
-        this.endDatetime = endDatetime;
-        this.user = user;
-        this.car = car;
-    }
+    private Location location;
 }
