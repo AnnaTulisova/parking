@@ -7,6 +7,7 @@
 </head>
 <body>
 <h1 th:inline="text">Hello [[${#authentication.getPrincipal().getUsername()}]]!</h1>
+<a class="btn btn-default" th:href="@{/reservation}" th:utext="Бронирование">Бронирование
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>

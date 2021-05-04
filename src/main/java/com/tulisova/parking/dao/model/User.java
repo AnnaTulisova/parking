@@ -8,13 +8,13 @@ import org.springframework.security.core.userdetails.*;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity(name = "USER")
+@Entity
 @Data
 @Accessors(chain = true)
 public class User implements UserDetails
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String firstName;
