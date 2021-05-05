@@ -19,18 +19,18 @@ public class PlaceServiceImpl implements PlaceService {
         return placeRepository.findAll();
     }
 
-    @Override
-    public Collection<Place> findByLocationId(Long locationId)
-    {
-        return placeRepository.findByLocationId(locationId);
-    }
+//    @Override
+//    public Collection<Place> findByLocationId(Long locationId)
+//    {
+//        return placeRepository.findByLocationId(locationId);
+//    }
 
-    @Override
-    public Collection<Place> findAllByLocationIdAndNotPlaceId(Long locationId, Collection<Long> placeIds)
-    {
-        return placeRepository.findByLocationId(locationId)
-                .stream()
-                .filter(it -> !placeIds.contains(it.getId()))
-                .collect(Collectors.toList());
-    }
+//    @Override
+//    public Collection<Place> findAllByLocationIdAndNotPlaceId(Long locationId, Collection<Long> placeIds)
+//    {
+//        return placeRepository.findByLocationId(locationId)
+//                .stream()
+//                .filter(it -> !placeIds.contains(it.getId()))
+//                .collect(Collectors.toList());
+//    }
 }

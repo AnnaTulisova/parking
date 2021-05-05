@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Бронирование места</h1>
-<form th:action="@{reservation/reservation}" th:object="${reservation}" method="POST" enctype="utf8">
+<form th:action="@{/reservation/reservation}" th:object="${reservation}" method="POST" enctype="utf8">
     <div class="form-group">
         <label>Номер автомобиля</label>
         <input th:field="*{carNumber}"/>
@@ -25,14 +25,12 @@
         <p th:each="error : ${#fields.errors('endDateTime')}"
            th:text="${error}">Validation error</p>
     </div>
-    <form th:action="@{reservation/locations}" th:object="${reservation}" method="GET" enctype="utf8">
-        <div class="form-group blu-margin">
-            <select class="form-control" th:field="*{location}"  id="dropLocation">
-                <option value="0">Выбрать локацию</option>
-                <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.address}"></option>
-            </select>
-        </div>
-    </form>
+    <div class="form-group blu-margin">
+        <select class="form-control" th:field="*{location}"  id="dropLocation">
+            <option value="0">Выбрать локацию</option>
+            <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.address}"></option>
+        </select>
+    </div>
 
     <div class="form-group blu-margin">
         <select class="form-control" th:field="*{place}"  id="dropPlace">

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticket" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e5013ffc-8e41-4974-bf4b-a56cef58062a">
+    <style name="Default" fontName="Arial" isDefault="true" pdfFontName="ARIAL.TTF" pdfEncoding="Cp1251"/>
+    <field name="id" class="java.lang.Long"> </field>
+    <field name="user" class="com.tulisova.parking.dao.model.User"> </field>
+    <field name="location" class="com.tulisova.parking.dao.model.Location"> </field>
+    <field name="place" class="com.tulisova.parking.dao.model.Place"> </field>
+    <field name="startDateTime" class="java.time.LocalDateTime"> </field>
+    <field name="endDateTime" class="java.time.LocalDateTime"> </field>
+    <field name="carNumber" class="java.lang.String"> </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="79" splitType="Stretch">
+            <textField>
+                <reportElement x="244" y="24" width="5000" height="30" uuid="ee068338-9fa6-43f9-95f4-79c58a8eccb8"/>
+                <textFieldExpression><![CDATA["Талон №" + $F{id}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+    <pageHeader>
+        <band height="51" splitType="Stretch">
+            <staticText>
+                <reportElement x="100" y="6" width="200" height="30" uuid="13780138-eb32-4353-a41c-d3a2fae3d912"/>
+                <text><![CDATA[Владелец автомобиля]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="100" y="16" width="300" height="14" uuid="2df68d17-bb9b-4b17-b671-0e01d02105ac"/>
+                <textFieldExpression><![CDATA["Имя: " + $F{user}.getFirstName()]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="26" width="300" height="14" uuid="5232b17e-84f3-4c72-9ff3-97641592643e"/>
+                <textFieldExpression><![CDATA["Фамилия: " + $F{user}.getLastName()]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageHeader>
+    <detail>
+        <band height="200" splitType="Stretch">
+            <textField>
+                <reportElement x="100" y="1" width="300" height="14" uuid="435ebe74-363d-4284-832f-74ac19270e5a"/>
+                <textFieldExpression><![CDATA["Номер автомобиля: " + $F{carNumber}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="11" width="300" height="14" uuid="2996aaa8-b65c-4373-8919-7fc8a75bb0de"/>
+                <textFieldExpression><![CDATA["Дата и время начала бронирования: " + $F{startDateTime}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="21" width="300" height="14" uuid="878e2299-ded6-4ea5-a105-617af4581303"/>
+                <textFieldExpression><![CDATA["Дата и время окончания бронирования: " + $F{endDateTime}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="41" width="300" height="14" uuid="74fbf3d5-0a3a-43cd-a0c0-03c386bd6c24"/>
+                <textFieldExpression><![CDATA["Расположение: " + $F{location}.getAddress()]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="100" y="51" width="300" height="14" uuid="14fdf873-f23c-47c1-a39b-387627fefa40"/>
+                <textFieldExpression><![CDATA["Место: " + $F{place}.getName()]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

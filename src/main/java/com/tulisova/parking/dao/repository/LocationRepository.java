@@ -10,5 +10,5 @@ import java.util.*;
 public interface LocationRepository extends JpaRepository<Location, Long> {
     Location findByAddress(String address);
 
-    Collection<Location> findAllWhereLocationIdNotIn(Collection<Long> ids);
+    //Collection<Location> findAllWhereLocationIdNotIn(Collection<Long> ids);
 }

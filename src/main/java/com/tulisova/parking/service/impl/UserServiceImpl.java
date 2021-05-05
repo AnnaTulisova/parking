@@ -7,6 +7,8 @@ import com.tulisova.parking.service.*;
 import com.tulisova.parking.service.dto.*;
 import com.tulisova.parking.service.exception.*;
 import lombok.*;
+import org.springframework.security.core.*;
+import org.springframework.security.core.context.*;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.*;
 import org.springframework.stereotype.*;
@@ -41,5 +43,11 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
         return user;
+    }
+
+    @Override
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 }

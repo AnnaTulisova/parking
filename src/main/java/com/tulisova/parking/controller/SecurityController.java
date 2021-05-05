@@ -45,7 +45,7 @@ public class SecurityController {
         try {
             User registered = userService.registerNewUser(userDto);
         } catch (UserAlreadyExistException uaeEx) {
-            ModelAndView mav = new ModelAndView("registration", "user", userDto);
+            ModelAndView mav = new ModelAndView("security/registration", "user", userDto);
             mav.addObject("message", "An account for that username/email already exists.");
             return mav;
         }

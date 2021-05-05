@@ -8,7 +8,7 @@ import java.util.*;
 
 public interface ReservationService {
     Collection<Reservation> findAll();
-    Collection<Reservation> findAllByStartDateTime(LocalDateTime startDateTime);
+    //Collection<Reservation> findAllByStartDateTime(LocalDateTime startDateTime);
     Reservation createReservation(ReservationDto reservationDto);
     //Collection<Place> findFreePlaces(ReservationDto reservationDto);
     //Collection<Location> findFreeLocations(ReservationDto reservationDto);
