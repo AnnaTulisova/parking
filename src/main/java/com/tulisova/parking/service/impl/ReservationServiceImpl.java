@@ -5,13 +5,10 @@ import com.tulisova.parking.dao.repository.*;
 import com.tulisova.parking.service.*;
 import com.tulisova.parking.service.dto.*;
 import lombok.*;
-import org.springframework.security.core.*;
-import org.springframework.security.core.context.*;
 import org.springframework.stereotype.*;
 
 import java.time.*;
 import java.util.*;
-import java.util.stream.*;
 
 @Service
 @RequiredArgsConstructor
@@ -19,11 +16,12 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final LocationService locationService;
     private final PlaceService placeService;
+    private final UserService userService;
 
     @Override
     public Reservation createReservation(ReservationDto reservationDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User) authentication.getPrincipal();
+
+        User currentUser = userService.getCurrentUser();
 
         Reservation toDBReservation = new Reservation().setCarNumber(reservationDto.getCarNumber())
                 .setLocation(reservationDto.getLocation())
@@ -72,10 +70,10 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findAll();
     }
 
-    @Override
+    /*@Override
     public Collection<Reservation> findAllByStartDateTime(LocalDateTime startDateTime) {
         return reservationRepository.findAllByStartDateTime(startDateTime);
-    }
+    }*/
 
     @Override
     public Reservation findById(Long id) {

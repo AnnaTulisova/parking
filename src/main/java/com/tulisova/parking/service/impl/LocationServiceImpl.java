@@ -19,12 +19,12 @@ public class LocationServiceImpl implements LocationService {
        return locationRepository.findAll();
     }
 
-    @Override
-    public Collection<Location> findAllWhereLocationIdNotIn(Collection<Location> reservedLocations)
-    {
-        return locationRepository.findAllWhereLocationIdNotIn(reservedLocations
-                                 .stream()
-                                 .map(it -> it.getId())
-                                 .collect(Collectors.toList()));
-    }
+//    @Override
+//    public Collection<Location> findAllWhereLocationIdNotIn(Collection<Location> reservedLocations)
+//    {
+//        return locationRepository.findAllWhereLocationIdNotIn(reservedLocations
+//                                 .stream()
+//                                 .map(it -> it.getId())
+//                                 .collect(Collectors.toList()));
+//    }
 }

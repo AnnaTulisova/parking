@@ -6,5 +6,5 @@ import java.util.*;
 
 public interface LocationService {
     Collection<Location> findAll();
-    Collection<Location> findAllWhereLocationIdNotIn(Collection<Location> reservedLocations);
+    //Collection<Location> findAllWhereLocationIdNotIn(Collection<Location> reservedLocations);
 }

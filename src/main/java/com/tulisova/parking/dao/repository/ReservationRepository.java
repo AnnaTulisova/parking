@@ -9,6 +9,6 @@ import java.util.*;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    @Query("select p from #{#entityName} where p.start_date_time >= #{startDateTime} and p.end_date_time <= #{startDateTime} ")
-    List<Reservation> findAllByStartDateTime(LocalDateTime startDateTime);
+    //@Query("select p from #{#entityName} where p.start_date_time >= #{startDateTime} and p.end_date_time <= #{startDateTime} ")
+    //List<Reservation> findAllByStartDateTime(LocalDateTime startDateTime);
 }

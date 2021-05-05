@@ -13,7 +13,7 @@ import java.time.*;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime startDateTime;
