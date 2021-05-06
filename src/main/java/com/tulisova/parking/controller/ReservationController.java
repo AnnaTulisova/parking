@@ -7,11 +7,9 @@ import com.tulisova.parking.service.dto.*;
 import com.tulisova.parking.service.pdf.*;
 import lombok.*;
 import net.sf.jasperreports.engine.*;
-import org.springframework.beans.propertyeditors.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.validation.*;
-import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.*;
 import org.springframework.web.servlet.*;
@@ -19,11 +17,7 @@ import org.springframework.web.servlet.*;
 import javax.servlet.http.*;
 import javax.validation.*;
 import java.io.*;
-import java.text.*;
-import java.time.*;
-import java.time.format.*;
 import java.util.*;
-import java.util.stream.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -46,10 +40,24 @@ public class ReservationController {
     }
 
     @PostMapping("/reservation/reservation")
-    public ModelAndView addReservation(@ModelAttribute("reservation") @Valid  final ReservationDto reservationDto, final HttpServletRequest request, final Errors errors) {
+    public ModelAndView addReservation(@ModelAttribute("reservation") @Valid  final ReservationDto reservationDto,
+                                       final BindingResult bindingResult,
+                                       final HttpServletRequest request,
+                                       final Errors errors) {
+        if(bindingResult.hasErrors())
+        {
+            ModelAndView model = new ModelAndView("reservation", "errors", errors);
+            model.addObject("reservation", reservationDto);
+            Collection<Location> locations = locationService.findAll();
+            Collection<Place> places = placeService.findAll();
+            model.addObject("locations", locations);
+            model.addObject("places", places);
+            return model;
+        }
+
         Reservation reservation = reservationService.createReservation(reservationDto);
         ReservationExtra reservationForView = new ReservationExtra(reservation);
-        return  new ModelAndView("reservationResult", "reservation", reservationForView);
+        return new ModelAndView("reservationResult", "reservation", reservationForView);
     }
 
     @GetMapping("/pdf")

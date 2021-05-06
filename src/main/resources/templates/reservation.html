@@ -31,6 +31,8 @@
             <option value="0">Выбрать локацию</option>
             <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.address}"></option>
         </select>
+        <p th:each="error : ${#fields.errors('location')}"
+        th:text="${error}">Validation error</p>
     </div>
 
     <div class="form-group blu-margin">
@@ -38,6 +40,8 @@
             <option value="0">Выбрать место</option>
             <option th:each="place : ${places}" th:value="${place.id}" th:text="${place.name}"></option>
         </select>
+        <p th:each="error : ${#fields.errors('place')}"
+           th:text="${error}">Validation error</p>
     </div>
     <button type="submit" class="btn btn-default">Забронировать место</button>
 </form>
