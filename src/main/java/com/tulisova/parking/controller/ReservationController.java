@@ -1,5 +1,6 @@
 package com.tulisova.parking.controller;
 
+import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.service.*;
 import com.tulisova.parking.service.dto.*;
@@ -47,31 +48,12 @@ public class ReservationController {
     @PostMapping("/reservation/reservation")
     public ModelAndView addReservation(@ModelAttribute("reservation") @Valid  final ReservationDto reservationDto, final HttpServletRequest request, final Errors errors) {
         Reservation reservation = reservationService.createReservation(reservationDto);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
-        reservationDto.setStartDateTime(formatter.format(reservation.getStartDateTime()));
-        reservationDto.setEndDateTime(formatter.format(reservation.getEndDateTime()));
-
-        ModelAndView reservationResultView = new ModelAndView("reservationResult", "reservation", reservationDto);
-        reservationResultView.addObject("user", reservation.getUser());
-        reservationResultView.addObject("reservationId", reservation.getId());
-
-        return reservationResultView;
+        ReservationExtra reservationForView = new ReservationExtra(reservation);
+        return  new ModelAndView("reservationResult", "reservation", reservationForView);
     }
 
     @GetMapping("/pdf")
     public void getPdf(@RequestParam("reservationId") Long reservationId, HttpServletResponse response, Model model) throws IOException, JRException {
-        //return jasperReportService.exportReport(Long.parseLong(reservationId));
         jasperReportService.exportReport(reservationId, response);
     }
-
-    /*@PostMapping("/reservation/reservation")
-    public ModelAndView addReservation(@ModelAttribute("reservation") @Valid ReservationDto reservationDto, HttpServletRequest request, Errors errors) {
-        try {
-            User registered = reservationService.registerNewUserAccount(reser);
-        } catch (UserAlreadyExistException uaeEx) {
-            uaeEx(reser.getEmail());
-            return uaeEx;
-        }
-    }*/
 }

@@ -9,24 +9,27 @@ import javax.validation.constraints.*;
 
 @Data
 @Accessors(chain = true)
-@PasswordMatches
+@PasswordMatches(message = "Пароли должны совпадать!")
 public class UserDto {
-    @NotNull @NotEmpty
+    @NotNull @NotEmpty(message = "Заполните поле!")
     private String firstName;
 
-    @NotNull @NotEmpty
+    @NotNull @NotEmpty(message = "Заполните поле!")
     private String lastName;
 
-    @NotNull @NotEmpty
+    @NotNull @NotEmpty(message = "Заполните поле!")
+    @Pattern(regexp = "^(?=(.*[а-я,a-z]){1,})(?=(.*[А-Я,A-Z]){1,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\\-__+.]){1,}).{8,}$" ,
+            message = "Пароль должен содержать миинимум одну заглавную букву, одну строчную букву, число, один спецсимвол. Сам пароль должен быть длиной от 8 символов.")
     private String password;
 
-    @NotNull @NotEmpty
+    @NotNull @NotEmpty(message = "Заполните поле!")
     private String matchingPassword;
 
-    @NotNull @NotEmpty
+    @NotNull @NotEmpty(message = "Заполните поле!")
+    @Pattern(regexp = "\\d{11}", message = "Номер телефона должен содержать значение из 11 цифр.")
     private String phone;
 
-    @ValidEmail
-    @NotNull @NotEmpty
+    @ValidEmail(message = "Введите правильно email.")
+    @NotNull @NotEmpty(message = "Заполните поле!")
     private String email;
 }

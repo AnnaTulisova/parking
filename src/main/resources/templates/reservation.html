@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <title>Бронирование места</title>
 </head>
 <body>
@@ -38,7 +39,12 @@
             <option th:each="place : ${places}" th:value="${place.id}" th:text="${place.name}"></option>
         </select>
     </div>
-    <button type="submit">Забронировать место</button>
+    <button type="submit" class="btn btn-default">Забронировать место</button>
 </form>
+<div>
+    <div>
+        <a class="btn btn-default" href="/" >На главную!</a>
+    </div>
+</div>
 </body>
 </html>

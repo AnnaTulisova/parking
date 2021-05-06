@@ -1,44 +1,60 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Зарегистрироваться</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+</head>
 <body>
-<h1 th:text="Регистрация">form</h1>
-<form th:action="@{/user/registration}" th:object="${user}" method="POST" enctype="utf8">
+<div class="col-xs">
+    <h1 th:text="Регистрация">form</h1>
     <div>
-        <label th:text="Имя">first</label>
-        <input th:field="*{firstName}"/>
-        <p th:each="error: ${#fields.errors('firstName')}"
-           th:text="${error}">Validation error</p>
+       <h2>
+           [[${message}]]
+       </h2>
     </div>
-    <div>
-        <label th:text="Фамилия">last</label>
-        <input th:field="*{lastName}"/>
-        <p th:each="error : ${#fields.errors('lastName')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="Почта">email</label>
-        <input type="email" th:field="*{email}"/>
-        <p th:each="error : ${#fields.errors('email')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="Телефона">phone</label>
-        <input th:field="*{phone}"/>
-        <p th:each="error : ${#fields.errors('phone')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="Пароль">password</label>
-        <input type="password" th:field="*{password}"/>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="Подтверждение">confirm</label>
-        <input type="password" th:field="*{matchingPassword}"/>
-    </div>
-    <button type="submit" th:text="Зарегистрироваться">submit</button>
-</form>
+    <form th:action="@{/user/registration}" th:object="${user}" method="POST" enctype="utf8">
+        <div>
+            <label th:text="Имя">first</label>
+            <input th:field="*{firstName}"/>
+            <p th:each="error: ${#fields.errors('firstName')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Фамилия">last</label>
+            <input th:field="*{lastName}"/>
+            <p th:each="error : ${#fields.errors('lastName')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Почта">email</label>
+            <input type="email" th:field="*{email}"/>
+            <p th:each="error : ${#fields.errors('email')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label>Номер телефона</label>
+            <input th:field="*{phone}"/>
+            <p th:each="error : ${#fields.errors('phone')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <div>
+            <label th:text="Пароль">password</label>
+            <input type="password" th:field="*{password}"/>
+            <p th:each="error : ${#fields.errors('password')}"
+               th:text="${error}">Validation error</p>
+            <p>
+                [[${passwordsNotMatchedMessage}]]
+            </p>
+        </div>
+        <div>
+            <label>Подтверждение пароля</label>
+            <input type="password" th:field="*{matchingPassword}"/>
+            <p th:each="error : ${#fields.errors('matchingPassword')}"
+               th:text="${error}">Validation error</p>
+        </div>
+        <button type="submit" class="btn btn-default" th:text="Зарегистрироваться">submit</button>
+    </form>
+</div>
 
-<a th:href="@{/login.html}" th:text="Авторизоваться">login</a>
+<a th:href="@{/login.html}" class="btn btn-default" th:text="Авторизоваться">login</a>
 </body>
 </html>

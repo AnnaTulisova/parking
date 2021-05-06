@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Забронировано!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
 </head>
 <body>
     <h1>Ваше место успешно забронировано!</h1>
@@ -11,11 +12,11 @@
             Данные о водителе:
             <div>
                 <label>Имя: </label>
-                <label>[[ ${user.getFirstName()} ]]</label>
+                <label>[[ ${reservation.getUser().getFirstName()} ]]</label>
             </div>
             <div>
                 <label>Фамилия: </label>
-                <label>[[ ${user.getLastName()} ]]</label>
+                <label>[[ ${reservation.getUser().getLastName()} ]]</label>
             </div>
         </div>
         <div>
@@ -40,8 +41,18 @@
         </div>
     </form>
     <form th:action="@{/pdf}"  method="get">
-        <input type="hidden" th:name="reservationId" th:value = "${reservationId}">
-        <input type="submit" value="Получить талон в pdf"/>
+        <input type="hidden" th:name="reservationId" th:value = "${reservation.getId()}">
+        <input class="btn btn-default" type="submit" value="Получить талон в pdf"/>
     </form>
+    <div>
+        <div>
+            <a class="btn btn-default" href="/" >На главную!</a>
+        </div>
+        <div>
+            <a class="btn btn-default" href="/reservation" >Забронировать ещё!</a>
+        </div>
+
+    </div>
+
 </body>
 </html>

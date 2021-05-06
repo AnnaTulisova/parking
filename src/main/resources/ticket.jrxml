@@ -6,9 +6,9 @@
     <field name="user" class="com.tulisova.parking.dao.model.User"> </field>
     <field name="location" class="com.tulisova.parking.dao.model.Location"> </field>
     <field name="place" class="com.tulisova.parking.dao.model.Place"> </field>
-    <field name="startDateTime" class="java.time.LocalDateTime"> </field>
-    <field name="endDateTime" class="java.time.LocalDateTime"> </field>
-    <field name="carNumber" class="java.lang.String"> </field>
+    <field name="startDateTime"> </field>
+    <field name="endDateTime"> </field>
+    <field name="carNumber"> </field>
     <background>
         <band splitType="Stretch"/>
     </background>

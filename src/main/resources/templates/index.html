@@ -3,13 +3,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Hello World!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <title>Рады Вас видеть!</title>
 </head>
 <body>
-<h1 th:inline="text">Hello [[${#authentication.getPrincipal().getUsername()}]]!</h1>
-<a class="btn btn-default" th:href="@{/reservation}" th:utext="Бронирование">Бронирование
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
+<h1 th:inline="text">Приветствуем, [[${#authentication.getPrincipal().getUsername()}]]!</h1>
+<div>
+    <a th:href="@{/reservation}" class="btn btn-default">Забронировать место </a>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" class="btn btn-default" value="Выйти из системы"/>
+    </form>
+</div>
+
 </body>
 </html>
