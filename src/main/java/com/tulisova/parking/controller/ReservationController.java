@@ -24,6 +24,7 @@ import java.util.*;
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final UserService userService;
     private final LocationService locationService;
     private final PlaceService placeService;
     private final JasperReportService jasperReportService;
@@ -39,13 +40,13 @@ public class ReservationController {
         return "reservation";
     }
 
+
     @PostMapping("/reservation/reservation")
     public ModelAndView addReservation(@ModelAttribute("reservation") @Valid  final ReservationDto reservationDto,
                                        final BindingResult bindingResult,
                                        final HttpServletRequest request,
                                        final Errors errors) {
-        if(bindingResult.hasErrors())
-        {
+        if(bindingResult.hasErrors()) {
             ModelAndView model = new ModelAndView("reservation", "errors", errors);
             model.addObject("reservation", reservationDto);
             Collection<Location> locations = locationService.findAll();
@@ -63,5 +64,31 @@ public class ReservationController {
     @GetMapping("/pdf")
     public void getPdf(@RequestParam("reservationId") Long reservationId, HttpServletResponse response, Model model) throws IOException, JRException {
         jasperReportService.exportReport(reservationId, response);
+    }
+
+    @GetMapping("/reservation-list")
+    public String getUserReservations(WebRequest request, Model model) {
+        User currentUser = userService.getCurrentUser();
+        Collection<Reservation> reservations = reservationService.findAllByUserId(currentUser.getId());
+        model.addAttribute("reservations", reservations);
+        return "reservation-list";
+    }
+
+    @GetMapping("/reservation-remove/")
+    public String prepareReservationToDelete(@RequestParam("reservationId") Long reservationId, WebRequest request, Model model) {
+        Reservation reservation = reservationService.findById(reservationId);
+        model.addAttribute("reservation", reservation);
+        return "reservation-remove";
+    }
+
+    @PostMapping("/reservation-remove")
+    public ModelAndView removeReservation(@RequestParam("reservationId") Long reservationId,
+                                           final BindingResult bindingResult,
+                                           final HttpServletRequest request,
+                                           final Errors errors) {
+        reservationService.deleteByReservationId(reservationId);
+        User currentUser = userService.getCurrentUser();
+        Collection<Reservation> reservations = reservationService.findAllByUserId(currentUser.getId());
+        return new ModelAndView("reservation-list", "reservations", reservations);
     }
 }

@@ -14,4 +14,6 @@ public interface ReservationService {
     //Collection<Place> findFreePlaces(ReservationDto reservationDto);
     //Collection<Location> findFreeLocations(ReservationDto reservationDto);
     Reservation findById(Long id);
+    void deleteByReservationId(Long id);
+    Collection<Reservation> findAllByUserId(Long userId);
 }

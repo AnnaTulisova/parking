@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Забронировано!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+</head>
+<body>
+    <h1>Вы уверены, что хотите удалить бронирование?</h1>
+    <form action="/reservation-remove" object="${reservation}" method="POST" enctype="utf8">
+        <div>
+            Данные о водителе:
+            <div>
+                <label>Имя: </label>
+                <label>[[ ${reservation.getUser().getFirstName()} ]]</label>
+            </div>
+            <div>
+                <label>Фамилия: </label>
+                <label>[[ ${reservation.getUser().getLastName()} ]]</label>
+            </div>
+        </div>
+        <div>
+            <label>Номер автомобиля: </label>
+            <label>[[ ${reservation.getCarNumber()} ]]</label>
+        </div>
+        <div>
+            <label>Время начала бронирования: </label>
+            <label>[[ ${reservation.getStartDateTime()} ]]</label>
+        </div>
+        <div>
+            <label>Время окончания бронирования: </label>
+            <label>[[ ${reservation.getEndDateTime()} ]]</label>
+        </div>
+        <div>
+            <label>Расположение: </label>
+            <label>[[ ${reservation.getLocation().getAddress()} ]]</label>
+        </div>
+        <div>
+            <label>Место: </label>
+            <label>[[ ${reservation.getPlace().getName()} ]]</label>
+        </div>
+        <input type="hidden" th:name="reservationId" th:value = "${reservation.getId()}">
+        <input class="btn btn-default" type="submit" value="Да"/>
+        <div>
+            <a class="btn btn-default" href="/reservation-list" >Нет, хочу обратно к списку</a>
+        </div>
+    </form>
+
+</body>
+</html>
