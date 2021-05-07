@@ -3,14 +3,13 @@
 
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
-<title th:utext="home">home</title>
+    <meta charset="UTF-8">
+<title>Успешно!</title>
 </head>
 <body>
 <div class="container">
-    <h1 class="alert alert-success" th:utext="success">success</h1>
-    <label> [[ ${#user.firstName} ]]</label>
-    <a th:href="@{/login}" th:utext="login">login</a>
+    <h1 class="alert alert-success">Ура! Регистрация прошла успешно.</h1>
+    <a th:href="@{/login}">Войти</a>
 </div>
 </body>
 </html>

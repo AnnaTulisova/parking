@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.tulisova.parking.service.exception.UserAlreadyExistException;
-import org.springframework.validation.Errors;
+import org.springframework.validation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.*;
+import java.util.stream.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -38,15 +40,35 @@ public class SecurityController {
     @PostMapping("/user/registration")
     public ModelAndView registerUserAccount(
             @ModelAttribute("user") @Valid final UserDto userDto,
+            final BindingResult bindingResult,
             final HttpServletRequest request,
             final Errors errors
     ) {
+        if (bindingResult.hasErrors()) {
+            Optional<ObjectError> passwordMatchesError = errors.getAllErrors().stream().filter(it ->
+                    it.getDefaultMessage().equals("Пароли должны совпадать!")).findFirst();
+            if(!passwordMatchesError.isEmpty())
+            {
+                List<ObjectError> totalErrors = errors.getAllErrors().stream()
+                        .filter(fer -> !fer.getDefaultMessage().equals("Пароли должны совпадать!"))
+                        .collect(Collectors.toList());
 
+                BeanPropertyBindingResult totalResult = new BeanPropertyBindingResult(userDto, "user");
+                for(ObjectError error: totalErrors)
+                {
+                    totalResult.addError(error);
+                }
+                ModelAndView errorModelView = new ModelAndView("security/registration", "errors", totalResult);
+                errorModelView.addObject("passwordsNotMatchedMessage", "Пароли должны совпадать!");
+                return errorModelView;
+            }
+            return new ModelAndView("security/registration", "errors", errors);
+        }
         try {
             User registered = userService.registerNewUser(userDto);
         } catch (UserAlreadyExistException uaeEx) {
             ModelAndView mav = new ModelAndView("security/registration", "user", userDto);
-            mav.addObject("message", "An account for that username/email already exists.");
+            mav.addObject("message", "Аккаунт для такого email уже существует.");
             return mav;
         }
 

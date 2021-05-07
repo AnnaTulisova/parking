@@ -1,5 +1,6 @@
 package com.tulisova.parking.service.impl;
 
+import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.dao.repository.*;
 import com.tulisova.parking.service.*;
@@ -79,4 +80,14 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation findById(Long id) {
         return reservationRepository.getById(id);
     }
+
+    @Override
+    public Collection<Reservation> findAllByUserId(Long userId) { return reservationRepository.findAllByUserId(userId); }
+
+    @Override
+    public void deleteByReservationId(Long id)
+    {
+        reservationRepository.deleteById(id);
+    }
+
 }

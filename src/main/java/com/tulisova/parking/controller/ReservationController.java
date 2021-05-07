@@ -1,16 +1,15 @@
 package com.tulisova.parking.controller;
 
+import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.service.*;
 import com.tulisova.parking.service.dto.*;
 import com.tulisova.parking.service.pdf.*;
 import lombok.*;
 import net.sf.jasperreports.engine.*;
-import org.springframework.beans.propertyeditors.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.validation.*;
-import org.springframework.web.bind.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.*;
 import org.springframework.web.servlet.*;
@@ -18,17 +17,14 @@ import org.springframework.web.servlet.*;
 import javax.servlet.http.*;
 import javax.validation.*;
 import java.io.*;
-import java.text.*;
-import java.time.*;
-import java.time.format.*;
 import java.util.*;
-import java.util.stream.*;
 
 @Controller
 @RequiredArgsConstructor
 public class ReservationController {
 
     private final ReservationService reservationService;
+    private final UserService userService;
     private final LocationService locationService;
     private final PlaceService placeService;
     private final JasperReportService jasperReportService;
@@ -44,34 +40,55 @@ public class ReservationController {
         return "reservation";
     }
 
+
     @PostMapping("/reservation/reservation")
-    public ModelAndView addReservation(@ModelAttribute("reservation") @Valid  final ReservationDto reservationDto, final HttpServletRequest request, final Errors errors) {
+    public ModelAndView addReservation(@ModelAttribute("reservation") @Valid  final ReservationDto reservationDto,
+                                       final BindingResult bindingResult,
+                                       final HttpServletRequest request,
+                                       final Errors errors) {
+        if(bindingResult.hasErrors()) {
+            ModelAndView model = new ModelAndView("reservation", "errors", errors);
+            model.addObject("reservation", reservationDto);
+            Collection<Location> locations = locationService.findAll();
+            Collection<Place> places = placeService.findAll();
+            model.addObject("locations", locations);
+            model.addObject("places", places);
+            return model;
+        }
+
         Reservation reservation = reservationService.createReservation(reservationDto);
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm");
-        reservationDto.setStartDateTime(formatter.format(reservation.getStartDateTime()));
-        reservationDto.setEndDateTime(formatter.format(reservation.getEndDateTime()));
-
-        ModelAndView reservationResultView = new ModelAndView("reservationResult", "reservation", reservationDto);
-        reservationResultView.addObject("user", reservation.getUser());
-        reservationResultView.addObject("reservationId", reservation.getId());
-
-        return reservationResultView;
+        ReservationExtra reservationForView = new ReservationExtra(reservation);
+        return new ModelAndView("reservationResult", "reservation", reservationForView);
     }
 
     @GetMapping("/pdf")
     public void getPdf(@RequestParam("reservationId") Long reservationId, HttpServletResponse response, Model model) throws IOException, JRException {
-        //return jasperReportService.exportReport(Long.parseLong(reservationId));
         jasperReportService.exportReport(reservationId, response);
     }
 
-    /*@PostMapping("/reservation/reservation")
-    public ModelAndView addReservation(@ModelAttribute("reservation") @Valid ReservationDto reservationDto, HttpServletRequest request, Errors errors) {
-        try {
-            User registered = reservationService.registerNewUserAccount(reser);
-        } catch (UserAlreadyExistException uaeEx) {
-            uaeEx(reser.getEmail());
-            return uaeEx;
-        }
-    }*/
+    @GetMapping("/reservation-list")
+    public String getUserReservations(WebRequest request, Model model) {
+        User currentUser = userService.getCurrentUser();
+        Collection<Reservation> reservations = reservationService.findAllByUserId(currentUser.getId());
+        model.addAttribute("reservations", reservations);
+        return "reservation-list";
+    }
+
+    @GetMapping("/reservation-remove/")
+    public String prepareReservationToDelete(@RequestParam("reservationId") Long reservationId, WebRequest request, Model model) {
+        Reservation reservation = reservationService.findById(reservationId);
+        model.addAttribute("reservation", reservation);
+        return "reservation-remove";
+    }
+
+    @PostMapping("/reservation-remove")
+    public ModelAndView removeReservation(@RequestParam("reservationId") Long reservationId,
+                                           final BindingResult bindingResult,
+                                           final HttpServletRequest request,
+                                           final Errors errors) {
+        reservationService.deleteByReservationId(reservationId);
+        User currentUser = userService.getCurrentUser();
+        Collection<Reservation> reservations = reservationService.findAllByUserId(currentUser.getId());
+        return new ModelAndView("reservation-list", "reservations", reservations);
+    }
 }

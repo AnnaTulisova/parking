@@ -1,5 +1,6 @@
 package com.tulisova.parking.service;
 
+import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.service.dto.*;
 
@@ -13,4 +14,6 @@ public interface ReservationService {
     //Collection<Place> findFreePlaces(ReservationDto reservationDto);
     //Collection<Location> findFreeLocations(ReservationDto reservationDto);
     Reservation findById(Long id);
+    void deleteByReservationId(Long id);
+    Collection<Reservation> findAllByUserId(Long userId);
 }
