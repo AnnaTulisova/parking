@@ -6,8 +6,56 @@
     <title>Бронирование места</title>
 </head>
 <body>
+
+
+
+<script
+        th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        //$('#findPlace').click(findPlace);
+        $('#dropLocation').change(findPlace);
+        function findPlace(){
+            $.ajax({
+                method: "GET",
+                url: "http://localhost:8080/findPlace",
+                data: $('#reservationForm').serialize(),
+                dataType: "json",
+                contentType: "application/json;charset=UTF-8",
+                success: function(data){
+                    if(data) {
+                           $('#dropPlace').empty();
+                           var nullOption = new Option("Выберите место", 0, false, false);
+                           $('#dropPlace').append(nullOption).trigger('change');
+                           for (i=0; i< data.length; i++) {
+                               var newOption = new Option(data[i].name, data[i].id, false, false);
+                               $('#dropPlace').append(newOption).trigger('change');
+                           }
+                    }
+                }
+            });
+        }
+
+        $('#endDateTime').on('input', function() {
+            let empty = false;
+            empty = $('#endDateTime').val().length == 0; // | $('#startDateTime').val().length == 0;
+            if (empty)
+            {
+              $('#dropLocation').attr('disabled', 'disabled');
+              $('#dropPlace').attr('disabled', 'disabled');
+            }
+            else
+            {
+              $('#dropLocation').attr('disabled', false);
+              $('#dropPlace').attr('disabled', false);
+            }
+        });
+     });
+
+    </script>
 <h1>Бронирование места</h1>
-<form th:action="@{/reservation/reservation}" th:object="${reservation}" method="POST" enctype="utf8">
+
+<form th:action="@{/reservation/reservation}" th:object="${reservation}" method="POST" id = "reservationForm" enctype="utf8">
     <div class="form-group">
         <label>Номер автомобиля</label>
         <input th:field="*{carNumber}"/>
@@ -16,27 +64,30 @@
     </div>
     <div class="form-group">
         <label>Время начала бронирования</label>
-        <input type="datetime-local" th:field="*{startDateTime}"/>
+        <input type="datetime-local" th:field="*{startDateTime}" id="startDateTime"/>
         <p th:each="error : ${#fields.errors('startDateTime')}"
            th:text="${error}">Validation error</p>
     </div>
     <div class="form-group">
         <label>Время окончания бронирования</label>
-        <input type="datetime-local" th:field="*{endDateTime}"/>
+        <input type="datetime-local" th:field="*{endDateTime}" id="endDateTime"/>
         <p th:each="error : ${#fields.errors('endDateTime')}"
            th:text="${error}">Validation error</p>
     </div>
-    <div class="form-group blu-margin">
-        <select class="form-control" th:field="*{location}"  id="dropLocation">
+    <div class="form-group blu-margin" >
+        <select class="form-control" th:field="*{location}"  id="dropLocation" th:disabled="!${startDateTime} or !${endDateTime}">
             <option value="0">Выбрать локацию</option>
             <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.address}"></option>
         </select>
         <p th:each="error : ${#fields.errors('location')}"
         th:text="${error}">Validation error</p>
     </div>
+<!--    <div >-->
+<!--        <button id="findPlace" type="button" class="btn btn-default">Найти место</button>-->
+<!--    </div>-->
 
     <div class="form-group blu-margin">
-        <select class="form-control" th:field="*{place}"  id="dropPlace">
+        <select class="form-control" th:field="*{place}"  id="dropPlace" th:disabled="!${startDateTime} or !${endDateTime} or !${location}">
             <option value="0">Выбрать место</option>
             <option th:each="place : ${places}" th:value="${place.id}" th:text="${place.name}"></option>
         </select>
@@ -50,5 +101,6 @@
         <a class="btn btn-default" href="/" >На главную!</a>
     </div>
 </div>
+
 </body>
 </html>

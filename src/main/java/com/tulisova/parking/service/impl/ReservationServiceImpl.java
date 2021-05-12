@@ -10,13 +10,12 @@ import org.springframework.stereotype.*;
 
 import java.time.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
-    private final LocationService locationService;
-    private final PlaceService placeService;
     private final UserService userService;
 
     @Override
@@ -35,46 +34,10 @@ public class ReservationServiceImpl implements ReservationService {
         return toDBReservation;
     }
 
-//    @Override
-//    public Collection<Place> findFreePlaces(ReservationDto reservationDto) {
-//        Collection<Location> locations;
-//        Collection<Place> places;
-//        if(reservationDto.getStartDateTime().isEmpty() && reservationDto.getEndDateTime().isEmpty())
-//        {
-//            locations = locationService.findAll();
-//            places = placeService.findAll();
-//        }
-//        else
-//        {
-//
-//            Collection<Reservation> reservations = findAllByStartDateTime(LocalDateTime.parse(reservationDto.getStartDateTime()));
-//            for(Reservation reservation: reservations)
-//            {
-//                Location reservedLocation = reservation.getLocation();
-//                Collection<Place> n
-//            }
-//
-//            List<Location> reservedLocations = reservations.stream().map(it -> it.getLocation()).collect(Collectors.toList());
-//            List<Place> reservedPlaces = reservations.stream().map(it -> it.getPlace()).collect(Collectors.toList());
-//            locations = locationService.findAllWhereLocationIdNotIn(reservedLocations);
-//
-//        }
-//    }
-
-//    @Override
-//    public Collection<Location> findFreeLocations(ReservationDto reservationDto) {
-//        return null;
-//    }
-
     @Override
     public Collection<Reservation> findAll() {
         return reservationRepository.findAll();
     }
-
-    /*@Override
-    public Collection<Reservation> findAllByStartDateTime(LocalDateTime startDateTime) {
-        return reservationRepository.findAllByStartDateTime(startDateTime);
-    }*/
 
     @Override
     public Reservation findById(Long id) {
@@ -88,6 +51,15 @@ public class ReservationServiceImpl implements ReservationService {
     public void deleteByReservationId(Long id)
     {
         reservationRepository.deleteById(id);
+    }
+
+    @Override
+    public Collection<Reservation> findAllByStartDateTime(String startDate)
+    {
+        LocalDate startDateDate = LocalDate.parse(startDate);
+        LocalDateTime startDateTotal = startDateDate.atStartOfDay();
+        LocalDateTime endDateTotal = startDateDate.atTime(23, 59, 59);
+        return reservationRepository.findAllByStartDateTime(startDateTotal, endDateTotal);
     }
 
 }

@@ -7,4 +7,5 @@ import java.io.*;
 
 public interface JasperReportService {
     void exportReport(Long reservationId, HttpServletResponse response) throws IOException, JRException;
+    void exportReport(String filteredDate, HttpServletResponse response) throws IOException, JRException;
 }

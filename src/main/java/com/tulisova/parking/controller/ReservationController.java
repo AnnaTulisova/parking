@@ -34,10 +34,17 @@ public class ReservationController {
         ReservationDto reservationDto = new ReservationDto();
         model.addAttribute("reservation", reservationDto);
         Collection<Location> locations = locationService.findAll();
-        Collection<Place> places = placeService.findAll();
         model.addAttribute("locations", locations);
-        model.addAttribute("places", places);
         return "reservation";
+    }
+
+    @RequestMapping(value="/findPlace", method=RequestMethod.GET,produces = "application/json")
+    public @ResponseBody Collection<Place> findPlaces(@RequestParam("carNumber") String carNumber,
+                                                      @RequestParam("startDateTime") String startDateTime,
+                                                      @RequestParam("endDateTime") String endDateTime,
+                                                      @RequestParam("location") Long locationId,
+                                                      @RequestParam("place") Long placeId) {
+        return placeService.findFreePlaces(startDateTime, locationId);
     }
 
 
@@ -50,9 +57,7 @@ public class ReservationController {
             ModelAndView model = new ModelAndView("reservation", "errors", errors);
             model.addObject("reservation", reservationDto);
             Collection<Location> locations = locationService.findAll();
-            Collection<Place> places = placeService.findAll();
             model.addObject("locations", locations);
-            model.addObject("places", places);
             return model;
         }
 
@@ -72,23 +77,5 @@ public class ReservationController {
         Collection<Reservation> reservations = reservationService.findAllByUserId(currentUser.getId());
         model.addAttribute("reservations", reservations);
         return "reservation-list";
-    }
-
-    @GetMapping("/reservation-remove/")
-    public String prepareReservationToDelete(@RequestParam("reservationId") Long reservationId, WebRequest request, Model model) {
-        Reservation reservation = reservationService.findById(reservationId);
-        model.addAttribute("reservation", reservation);
-        return "reservation-remove";
-    }
-
-    @PostMapping("/reservation-remove")
-    public ModelAndView removeReservation(@RequestParam("reservationId") Long reservationId,
-                                           final BindingResult bindingResult,
-                                           final HttpServletRequest request,
-                                           final Errors errors) {
-        reservationService.deleteByReservationId(reservationId);
-        User currentUser = userService.getCurrentUser();
-        Collection<Reservation> reservations = reservationService.findAllByUserId(currentUser.getId());
-        return new ModelAndView("reservation-list", "reservations", reservations);
     }
 }

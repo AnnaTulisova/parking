@@ -34,9 +34,7 @@
             <td><span th:text="${reservation.getEndDateTime()}"> EndDateTime </span></td>
             <td><span th:text="${reservation.getLocation().getAddress()}"> Location </span></td>
             <td><span th:text="${reservation.getPlace().getName()}"> Place </span></td>
-            <td><span> <a th:href=@{/reservation-remove?{reservationId}(reservationId=${reservation.getId()})} class="btn btn-default">Удалить бронирование </a>
-                        <a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="btn btn-default">Талон в pdf </a>
-            </span></td>
+            <td><span><a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="btn btn-default">Талон в pdf </a></span></td>
         </tr>
         </tbody>
     </table>

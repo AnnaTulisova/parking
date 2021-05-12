@@ -6,6 +6,5 @@ import java.util.*;
 
 public interface PlaceService {
     Collection<Place> findAll();
-//    Collection<Place> findByLocationId(Long locationId);
-//    Collection<Place> findAllByLocationIdAndNotPlaceId(Long locationId, Collection<Long> placeIds);
+    Collection<Place> findFreePlaces(String startDateTime, Long locationId);
 }

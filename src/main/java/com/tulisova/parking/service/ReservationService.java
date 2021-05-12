@@ -9,10 +9,8 @@ import java.util.*;
 
 public interface ReservationService {
     Collection<Reservation> findAll();
-    //Collection<Reservation> findAllByStartDateTime(LocalDateTime startDateTime);
+    Collection<Reservation> findAllByStartDateTime(String startDate);
     Reservation createReservation(ReservationDto reservationDto);
-    //Collection<Place> findFreePlaces(ReservationDto reservationDto);
-    //Collection<Location> findFreeLocations(ReservationDto reservationDto);
     Reservation findById(Long id);
     void deleteByReservationId(Long id);
     Collection<Reservation> findAllByUserId(Long userId);

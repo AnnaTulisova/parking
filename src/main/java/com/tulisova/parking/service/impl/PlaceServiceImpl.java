@@ -6,6 +6,7 @@ import com.tulisova.parking.service.*;
 import lombok.*;
 import org.springframework.stereotype.*;
 
+import java.time.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -19,18 +20,21 @@ public class PlaceServiceImpl implements PlaceService {
         return placeRepository.findAll();
     }
 
-//    @Override
-//    public Collection<Place> findByLocationId(Long locationId)
-//    {
-//        return placeRepository.findByLocationId(locationId);
+    @Override
+    public Collection<Place> findFreePlaces(String startDateTime, Long locationId) {
+        LocalDateTime startDateTimeTotal = LocalDateTime.parse(startDateTime);
+        Collection<Long> reservedPlaceIds = placeRepository.findAllReservedPlaceIds(locationId, startDateTimeTotal);
+        return findAllByLocationId(locationId).stream().filter(it-> !reservedPlaceIds.contains(it.getId())).collect(Collectors.toList());
+    }
+
+    public Collection<Place> findAllByLocationId(Long locationId) {
+        return placeRepository.findByLocationId(locationId);
+    }
+
+//
+//    public Collection<Reservation> findAllReservationsByStartDateTime(LocalDateTime startDateTime) {
+//        return reservationRepository.findAllByStartDateTime(startDateTime);
 //    }
 
-//    @Override
-//    public Collection<Place> findAllByLocationIdAndNotPlaceId(Long locationId, Collection<Long> placeIds)
-//    {
-//        return placeRepository.findByLocationId(locationId)
-//                .stream()
-//                .filter(it -> !placeIds.contains(it.getId()))
-//                .collect(Collectors.toList());
-//    }
+
 }

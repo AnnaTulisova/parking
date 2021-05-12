@@ -13,25 +13,33 @@
         <band splitType="Stretch"/>
     </background>
     <title>
-        <band height="79" splitType="Stretch">
+        <band height="70" splitType="Stretch">
             <textField>
-                <reportElement x="244" y="24" width="5000" height="30" uuid="ee068338-9fa6-43f9-95f4-79c58a8eccb8"/>
+                <reportElement x="244" y="0" width="5000" height="14" uuid="ee068338-9fa6-43f9-95f4-79c58a8eccb8"/>
+                <textFieldExpression><![CDATA["ООО AutoCity"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="248" y="14" width="5000" height="14" uuid="ee068338-9fa6-43f9-95f4-79c58a8eccb8"/>
                 <textFieldExpression><![CDATA["Талон №" + $F{id}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="230" y="28" width="5000" height="20" uuid="ee068338-9fa6-43f9-95f4-79c58a8eccb8"/>
+                <textFieldExpression><![CDATA["Парковочное место"]]></textFieldExpression>
             </textField>
         </band>
     </title>
     <pageHeader>
-        <band height="51" splitType="Stretch">
+        <band height="60" splitType="Stretch">
             <staticText>
-                <reportElement x="100" y="6" width="200" height="30" uuid="13780138-eb32-4353-a41c-d3a2fae3d912"/>
+                <reportElement x="100" y="12" width="200" height="14" uuid="13780138-eb32-4353-a41c-d3a2fae3d912"/>
                 <text><![CDATA[Владелец автомобиля]]></text>
             </staticText>
             <textField>
-                <reportElement x="100" y="16" width="300" height="14" uuid="2df68d17-bb9b-4b17-b671-0e01d02105ac"/>
+                <reportElement x="100" y="26" width="300" height="14" uuid="2df68d17-bb9b-4b17-b671-0e01d02105ac"/>
                 <textFieldExpression><![CDATA["Имя: " + $F{user}.getFirstName()]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="100" y="26" width="300" height="14" uuid="5232b17e-84f3-4c72-9ff3-97641592643e"/>
+                <reportElement x="100" y="40" width="300" height="14" uuid="5232b17e-84f3-4c72-9ff3-97641592643e"/>
                 <textFieldExpression><![CDATA["Фамилия: " + $F{user}.getLastName()]]></textFieldExpression>
             </textField>
         </band>
@@ -39,23 +47,23 @@
     <detail>
         <band height="200" splitType="Stretch">
             <textField>
-                <reportElement x="100" y="1" width="300" height="14" uuid="435ebe74-363d-4284-832f-74ac19270e5a"/>
+                <reportElement x="100" y="0" width="300" height="14" uuid="435ebe74-363d-4284-832f-74ac19270e5a"/>
                 <textFieldExpression><![CDATA["Номер автомобиля: " + $F{carNumber}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="100" y="11" width="300" height="14" uuid="2996aaa8-b65c-4373-8919-7fc8a75bb0de"/>
+                <reportElement x="100" y="14" width="300" height="14" uuid="2996aaa8-b65c-4373-8919-7fc8a75bb0de"/>
                 <textFieldExpression><![CDATA["Дата и время начала бронирования: " + $F{startDateTime}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="100" y="21" width="300" height="14" uuid="878e2299-ded6-4ea5-a105-617af4581303"/>
+                <reportElement x="100" y="28" width="300" height="14" uuid="878e2299-ded6-4ea5-a105-617af4581303"/>
                 <textFieldExpression><![CDATA["Дата и время окончания бронирования: " + $F{endDateTime}]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="100" y="41" width="300" height="14" uuid="74fbf3d5-0a3a-43cd-a0c0-03c386bd6c24"/>
+                <reportElement x="100" y="42" width="300" height="14" uuid="74fbf3d5-0a3a-43cd-a0c0-03c386bd6c24"/>
                 <textFieldExpression><![CDATA["Расположение: " + $F{location}.getAddress()]]></textFieldExpression>
             </textField>
             <textField>
-                <reportElement x="100" y="51" width="300" height="14" uuid="14fdf873-f23c-47c1-a39b-387627fefa40"/>
+                <reportElement x="100" y="56" width="300" height="14" uuid="14fdf873-f23c-47c1-a39b-387627fefa40"/>
                 <textFieldExpression><![CDATA["Место: " + $F{place}.getName()]]></textFieldExpression>
             </textField>
         </band>

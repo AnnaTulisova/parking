@@ -9,7 +9,7 @@ import java.util.*;
 
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
-    //@Query("select p from #{#entityName} where p.start_date_time >= #{startDateTime} and p.end_date_time <= #{startDateTime} ")
-    //List<Reservation> findAllByStartDateTime(LocalDateTime startDateTime);
+    @Query("select r from Reservation r where startDateTime between ?#{#startDateTime} and ?#{#endDateTime}")
+    Collection<Reservation> findAllByStartDateTime(LocalDateTime startDateTime, LocalDateTime endDateTime);
     Collection<Reservation> findAllByUserId(Long userId);
 }

@@ -15,6 +15,7 @@ import org.springframework.util.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,5 +37,28 @@ public class JasperReportServiceImpl implements JasperReportService {
 
         OutputStream stream = response.getOutputStream();
         JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+    }
+
+    @Override
+    public void exportReport(String filteredDate, HttpServletResponse response) throws IOException, JRException {
+        Collection<Reservation> reservations;
+        if(filteredDate.isEmpty()) {
+            reservations = reservationService.findAll();
+        } else {
+            reservations = reservationService.findAllByStartDateTime(filteredDate);
+        }
+        Collection<ReservationExtra> pdfReservations = reservations.stream().map(ReservationExtra::new).collect(Collectors.toList());
+
+        response.setContentType("application/x-download");
+        response.setHeader("Content-Disposition", String.format("attachment; filename=\"reservations.pdf\""));
+        File file = ResourceUtils.getFile("classpath:reservation_list.jrxml");
+
+        JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+        JRDataSource dataSource = new JRBeanCollectionDataSource(pdfReservations);
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, new HashMap<String,Object>(), dataSource);
+
+        OutputStream stream = response.getOutputStream();
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
     }
 }
