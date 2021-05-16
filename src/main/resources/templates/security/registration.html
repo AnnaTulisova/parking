@@ -1,60 +1,83 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Зарегистрироваться</title>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="col-xs">
-    <h1 th:text="Регистрация">form</h1>
-    <div>
-       <h2>
-           [[${message}]]
-       </h2>
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+    <div class="fadeIn first">
+        <h1 th:text="Регистрация">form</h1>
+        <div>
+            <h2 class="error">
+                [[${message}]]
+            </h2>
+        </div>
     </div>
+
     <form th:action="@{/user/registration}" th:object="${user}" method="POST" enctype="utf8">
-        <div>
-            <label th:text="Имя">first</label>
-            <input th:field="*{firstName}"/>
-            <p th:each="error: ${#fields.errors('firstName')}"
+        <div class="fadeIn second">
+            <input type="text" th:field="*{firstName}" placeholder="Имя"/>
+            <p class="error" th:each="error: ${#fields.errors('firstName')}"
                th:text="${error}">Validation error</p>
         </div>
-        <div>
-            <label th:text="Фамилия">last</label>
-            <input th:field="*{lastName}"/>
-            <p th:each="error : ${#fields.errors('lastName')}"
+        <div class="fadeIn second">
+            <input type="text" th:field="*{lastName}" placeholder="Фамилия"/>
+            <p class="error" th:each="error : ${#fields.errors('lastName')}"
                th:text="${error}">Validation error</p>
         </div>
-        <div>
-            <label th:text="Почта">email</label>
-            <input type="email" th:field="*{email}"/>
-            <p th:each="error : ${#fields.errors('email')}"
+        <div class="fadeIn second">
+            <input type="email" th:field="*{email}" placeholder="Почта"/>
+            <p class="error" th:each="error : ${#fields.errors('email')}"
                th:text="${error}">Validation error</p>
         </div>
-        <div>
-            <label>Номер телефона</label>
-            <input th:field="*{phone}"/>
-            <p th:each="error : ${#fields.errors('phone')}"
+        <div class="fadeIn third">
+            <input type="text" th:field="*{phone}" placeholder="Номер телефона"/>
+            <p class="error" th:each="error : ${#fields.errors('phone')}"
                th:text="${error}">Validation error</p>
         </div>
-        <div>
-            <label th:text="Пароль">password</label>
-            <input type="password" th:field="*{password}"/>
-            <p th:each="error : ${#fields.errors('password')}"
+        <div class="fadeIn third">
+            <input type="password" th:field="*{password}" placeholder="Пароль"/>
+            <p class="error" th:each="error : ${#fields.errors('password')}"
                th:text="${error}">Validation error</p>
-            <p>
+            <p class="error" th:if = "${passwordsNotMatchedMessage}">
                 [[${passwordsNotMatchedMessage}]]
             </p>
         </div>
-        <div>
-            <label>Подтверждение пароля</label>
-            <input type="password" th:field="*{matchingPassword}"/>
-            <p th:each="error : ${#fields.errors('matchingPassword')}"
+        <div class="fadeIn third">
+            <input type="password" th:field="*{matchingPassword}" placeholder="Подтверждение пароля"/>
+            <p class="error" th:each="error : ${#fields.errors('matchingPassword')}"
                th:text="${error}">Validation error</p>
         </div>
-        <button type="submit" class="btn btn-default" th:text="Зарегистрироваться">submit</button>
+        <input type="submit" class="fadeIn fourth" value="Зарегистрироваться"/>
     </form>
+    <div>
+        <a class="fadeIn fourth" th:href="@{/login.html}" th:text="Авторизоваться">login</a>
+    </div>
+</div>
 </div>
 
-<a th:href="@{/login.html}" class="btn btn-default" th:text="Авторизоваться">login</a>
+
 </body>
 </html>

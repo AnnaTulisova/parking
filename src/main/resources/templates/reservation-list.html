@@ -1,17 +1,40 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
+    <title>Список бронирований</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-    <title>Список бронирования</title>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
+
 <body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/reservation-list}">Мои бронирования</a>
+            </li>
+        </ul>
+        <div id="logout">
+            <form action="/logout" method="post">
+                <input type="submit" value="Выйти из системы" id="logout-btn">
+            </form>
+        </div>
+    </nav>
+</header>
 <h1 th:inline="text">Список забронированных мест</h1>
-<div>
-    <form th:action="@{/logout}" method="post">
-        <input type="submit" class="btn btn-default" value="Выйти из системы"/>
-    </form>
-</div>
 
 <div>
     <table>
@@ -30,11 +53,12 @@
             <td colspan="2"> Пока не сделано ни одного бронирования </td>
         </tr>
         <tr th:each="reservation : ${reservations}">
+            <td><span th:text="${reservation.getCarNumber()}"> StartDateTime </span></td>
             <td><span th:text="${reservation.getStartDateTime()}"> StartDateTime </span></td>
             <td><span th:text="${reservation.getEndDateTime()}"> EndDateTime </span></td>
             <td><span th:text="${reservation.getLocation().getAddress()}"> Location </span></td>
             <td><span th:text="${reservation.getPlace().getName()}"> Place </span></td>
-            <td><span><a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="btn btn-default">Талон в pdf </a></span></td>
+            <td><span><a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="ticket ticket-admin">Талон в pdf </a></span></td>
         </tr>
         </tbody>
     </table>

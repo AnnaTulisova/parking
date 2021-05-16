@@ -11,7 +11,7 @@ public class ReservationDto {
 
     @NotNull @NotEmpty(message = "Заполните поле!")
     @Pattern(regexp = "^[А-Я]{1}[0-9]{3}[А-Я]{2}[0-9]{2,}$",
-            message = "Номер автомобидя должен иметь следующий формат XYYYXXZZZ, где X - буквы номера, Y - цифры, а Z - код региона")
+            message = "Номер автомобиля должен иметь следующий формат XYYYXXZZZ, где X - буквы номера, Y - цифры, а Z - код региона")
     private String carNumber;
 
     @NotNull @NotEmpty(message = "Заполните поле!")

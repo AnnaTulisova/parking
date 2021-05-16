@@ -1,5 +1,6 @@
 package com.tulisova.parking.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -29,7 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/console/**", "/registration*", "/successRegister*", "/user/registration*", "/h2-console/**").permitAll()
+                    .antMatchers("/console/**", "/registration*", "/successRegister*", "/user/registration*", "/h2-console/**", "/contacts*", "/about*").permitAll()
+                    .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

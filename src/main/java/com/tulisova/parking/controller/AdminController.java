@@ -1,5 +1,6 @@
 package com.tulisova.parking.controller;
 
+import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.service.*;
 import com.tulisova.parking.service.dto.*;
@@ -19,6 +20,7 @@ import javax.validation.*;
 import java.io.*;
 import java.time.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,15 +30,17 @@ public class AdminController {
 
     @GetMapping("/reservation-list-admin")
     public String showReservationList(WebRequest request, Model model) {
-        Collection<Reservation> reservations = reservationService.findAll();
+        Collection<ReservationExtra> reservations = reservationService.findAll().stream()
+                .map(ReservationExtra::new)
+                .collect(Collectors.toList());;
         model.addAttribute("reservations", reservations);
         return "reservation-list-admin";
     }
 
-    @GetMapping("/reservation-remove")
-    public String prepareReservationToDelete(@RequestParam("reservationId") Long reservationId, WebRequest request, Model model) {
+    @GetMapping("/reservation-remove/{reservationId}")
+    public String prepareReservationToDelete(@PathVariable("reservationId") Long reservationId, WebRequest request, Model model) {
         Reservation reservation = reservationService.findById(reservationId);
-        model.addAttribute("reservation", reservation);
+        model.addAttribute("reservation", new ReservationExtra(reservation));
         return "reservation-remove";
     }
 
@@ -45,7 +49,11 @@ public class AdminController {
                                           final HttpServletRequest request,
                                           final Errors errors) {
         reservationService.deleteByReservationId(reservationId);
-        Collection<Reservation> reservations = reservationService.findAll();
+        Collection<ReservationExtra> reservations = reservationService
+                .findAll()
+                .stream()
+                .map(ReservationExtra::new)
+                .collect(Collectors.toList());
         return new ModelAndView("reservation-list-admin", "reservations", reservations);
     }
 
@@ -53,13 +61,17 @@ public class AdminController {
     public String filterReservationList(@RequestParam("startDate") String startDate,
                                         WebRequest request, Model model)
     {
-        Collection<Reservation> reservations = reservationService.findAllByStartDateTime(startDate);
+        Collection<ReservationExtra> reservations = reservationService
+                .findAllByStartDateTime(startDate)
+                .stream()
+                .map(ReservationExtra::new)
+                .collect(Collectors.toList());
         model.addAttribute("reservations", reservations).addAttribute("startDate", startDate).addAttribute("filtered", true);
         return "reservation-list-admin";
     }
 
     @GetMapping("/pdf-list")
-    public void getPdf(@RequestParam("filtered") String filtteredDate, HttpServletResponse response, Model model) throws IOException, JRException {
-        jasperReportService.exportReport(filtteredDate, response);
+    public void getPdf(@RequestParam(value = "filtered", required = false) String filteredDate, HttpServletResponse response, Model model) throws IOException, JRException {
+        jasperReportService.exportReport(filteredDate, response);
     }
 }

@@ -18,6 +18,7 @@ import javax.servlet.http.*;
 import javax.validation.*;
 import java.io.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -63,18 +64,21 @@ public class ReservationController {
 
         Reservation reservation = reservationService.createReservation(reservationDto);
         ReservationExtra reservationForView = new ReservationExtra(reservation);
-        return new ModelAndView("reservationResult", "reservation", reservationForView);
+        return new ModelAndView("reservation-result", "reservation", reservationForView);
     }
 
-    @GetMapping("/pdf")
-    public void getPdf(@RequestParam("reservationId") Long reservationId, HttpServletResponse response, Model model) throws IOException, JRException {
+    @GetMapping("/pdf/{reservationId}")
+    public @ResponseBody void getPdf(@PathVariable("reservationId") Long reservationId, HttpServletResponse response, Model model) throws IOException, JRException {
         jasperReportService.exportReport(reservationId, response);
     }
 
     @GetMapping("/reservation-list")
     public String getUserReservations(WebRequest request, Model model) {
         User currentUser = userService.getCurrentUser();
-        Collection<Reservation> reservations = reservationService.findAllByUserId(currentUser.getId());
+        Collection<ReservationExtra> reservations = reservationService
+                .findAllByUserId(currentUser.getId())
+                .stream().map(ReservationExtra::new)
+                .collect(Collectors.toList());
         model.addAttribute("reservations", reservations);
         return "reservation-list";
     }

@@ -56,6 +56,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Collection<Reservation> findAllByStartDateTime(String startDate)
     {
+        if(startDate.isEmpty())
+        {
+            return reservationRepository.findAll();
+        }
         LocalDate startDateDate = LocalDate.parse(startDate);
         LocalDateTime startDateTotal = startDateDate.atStartOfDay();
         LocalDateTime endDateTotal = startDateDate.atTime(23, 59, 59);

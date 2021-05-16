@@ -1,23 +1,55 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
     <title>Войти в систему</title>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
-<h1>Добро пожаловать!</h1>
-<div th:if="${param.error}">
-    Неверные имя или пароль. Пожалуйста, введите ещё раз.
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h1>Добро пожаловать!</h1>
+            <div th:if="${param.error}" class="error">
+                Неверные имя или пароль. Пожалуйста, введите ещё раз.
+            </div>
+            <div th:if="${param.logout}" class="error">
+                Был совершен выход из системы. Войдите ещё раз.
+            </div>
+        </div>
+        <form th:action="@{/login}" method="post">
+            <div><input class="fadeIn second" type="text" name="username" placeholder="Логин"/> </div>
+            <div><input class="fadeIn third" type="password"  name="password" placeholder="Пароль"/> </div>
+            <div><input type="submit" class="fadeIn fourth" value="Войти"/></div>
+        </form>
+
+        <div>
+            <a class="fadeIn fourth" th:href="@{/registration}" th:utext="Зарегистрироваться" id="register">Зарегистрироваться</a>
+        </div>
+    </div>
 </div>
-<div th:if="${param.logout}">
-    Был совершен выход из системы. Войдите ещё раз.
-</div>
-<form th:action="@{/login}" method="post">
-    <div><label> Логин : <input type="text" name="username"/> </label></div>
-    <div><label> Пароль: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" class="btn btn-default" value="Войти"/></div>
-</form>
-<a class="btn btn-default" th:href="@{/registration}" th:utext="Зарегистрироваться">Зарегистрироваться</a>
 </body>
 </html>

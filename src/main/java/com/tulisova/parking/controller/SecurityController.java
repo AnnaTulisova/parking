@@ -1,6 +1,6 @@
 package com.tulisova.parking.controller;
 
-import com.tulisova.parking.dao.model.User;
+import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.service.UserService;
 import com.tulisova.parking.service.dto.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,38 @@ public class SecurityController {
     @GetMapping("/login")
     public String login() {
         return "security/login";
+    }
+
+    @GetMapping("/contacts")
+    public String getContacts(WebRequest request, Model model) {
+        User user = userService.getCurrentUser();
+        String mainUrl = "/";
+        if(user != null)
+        {
+            Boolean userIsAdmin = user.getRoles().contains(Role.ADMIN);
+            if(userIsAdmin)
+            {
+                mainUrl = "index-admin";
+            }
+        }
+        model.addAttribute("link", mainUrl);
+        return "contacts";
+    }
+
+    @GetMapping("/about")
+    public String about(WebRequest request, Model model) {
+        User user = userService.getCurrentUser();
+        String mainUrl = "/";
+        if(user != null)
+        {
+            Boolean userIsAdmin = user.getRoles().contains(Role.ADMIN);
+            if(userIsAdmin)
+            {
+                mainUrl = "index-admin";
+            }
+        }
+        model.addAttribute("link", mainUrl);
+        return "about";
     }
 
     @GetMapping("/registration")
@@ -59,7 +91,7 @@ public class SecurityController {
                     totalResult.addError(error);
                 }
                 ModelAndView errorModelView = new ModelAndView("security/registration", "errors", totalResult);
-                errorModelView.addObject("passwordsNotMatchedMessage", "Пароли должны совпадать!");
+                errorModelView.addObject("passwordsNotMatchedMessage", "Пароль и его подтверждение не совпадают.");
                 return errorModelView;
             }
             return new ModelAndView("security/registration", "errors", errors);
@@ -68,10 +100,10 @@ public class SecurityController {
             User registered = userService.registerNewUser(userDto);
         } catch (UserAlreadyExistException uaeEx) {
             ModelAndView mav = new ModelAndView("security/registration", "user", userDto);
-            mav.addObject("message", "Аккаунт для такого email уже существует.");
+            mav.addObject("message", "Аккаунт для такого email " + userDto.getEmail()+ " уже существует.");
             return mav;
         }
 
-        return new ModelAndView("security/successRegister", "user", userDto);
+        return new ModelAndView("security/success-register", "user", userDto);
     }
 }

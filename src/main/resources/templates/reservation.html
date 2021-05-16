@@ -2,13 +2,38 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <title>Бронирование места</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-
-
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/reservation-list}">Мои бронирования</a>
+            </li>
+        </ul>
+        <div id="logout">
+            <form action="/logout" method="post">
+                <input type="submit" value="Выйти из системы" id="logout-btn">
+            </form>
+        </div>
+    </nav>
+</header>
 <script
         th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
 <script th:inline="javascript">
@@ -53,54 +78,54 @@
      });
 
     </script>
-<h1>Бронирование места</h1>
 
-<form th:action="@{/reservation/reservation}" th:object="${reservation}" method="POST" id = "reservationForm" enctype="utf8">
-    <div class="form-group">
-        <label>Номер автомобиля</label>
-        <input th:field="*{carNumber}"/>
-        <p th:each="error: ${#fields.errors('carNumber')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div class="form-group">
-        <label>Время начала бронирования</label>
-        <input type="datetime-local" th:field="*{startDateTime}" id="startDateTime"/>
-        <p th:each="error : ${#fields.errors('startDateTime')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div class="form-group">
-        <label>Время окончания бронирования</label>
-        <input type="datetime-local" th:field="*{endDateTime}" id="endDateTime"/>
-        <p th:each="error : ${#fields.errors('endDateTime')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div class="form-group blu-margin" >
-        <select class="form-control" th:field="*{location}"  id="dropLocation" th:disabled="!${startDateTime} or !${endDateTime}">
-            <option value="0">Выбрать локацию</option>
-            <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.address}"></option>
-        </select>
-        <p th:each="error : ${#fields.errors('location')}"
-        th:text="${error}">Validation error</p>
-    </div>
-<!--    <div >-->
-<!--        <button id="findPlace" type="button" class="btn btn-default">Найти место</button>-->
-<!--    </div>-->
-
-    <div class="form-group blu-margin">
-        <select class="form-control" th:field="*{place}"  id="dropPlace" th:disabled="!${startDateTime} or !${endDateTime} or !${location}">
-            <option value="0">Выбрать место</option>
-            <option th:each="place : ${places}" th:value="${place.id}" th:text="${place.name}"></option>
-        </select>
-        <p th:each="error : ${#fields.errors('place')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <button type="submit" class="btn btn-default">Забронировать место</button>
-</form>
-<div>
-    <div>
-        <a class="btn btn-default" href="/" >На главную!</a>
+<div class="wrapper fadeInDown">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h1>Бронирование места</h1>
+        </div>
+        <form th:action="@{/reservation/reservation}" th:object="${reservation}" method="POST" id = "reservationForm" enctype="utf8">
+            <div class="fadeIn second">
+                <input th:field="*{carNumber}" type="text" placeholder="Номер автомобиля"/>
+                <p class="error" th:each="error: ${#fields.errors('carNumber')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="fadeIn second">
+                <input class="fadeIn second" type="datetime-local" th:field="*{startDateTime}" id="startDateTime" placeholder="Дата и время начала бронирования"/>
+                <p class="error" th:each="error : ${#fields.errors('startDateTime')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="fadeIn second">
+                <input class="fadeIn second" type="datetime-local" th:field="*{endDateTime}" id="endDateTime" placeholder="Дата и время окончания бронирования"/>
+                <p class="error" th:each="error : ${#fields.errors('endDateTime')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group blu-margin fadeIn third" >
+                <select class="form-control fadeIn third" th:field="*{location}"  id="dropLocation" th:disabled="!${startDateTime} or !${endDateTime}">
+                    <option value="0">Выбрать локацию</option>
+                    <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.address}"></option>
+                </select>
+                <p class="error" th:each="error : ${#fields.errors('location')}"
+                th:text="${error}">Validation error</p>
+            </div>
+            <div class="form-group blu-margin fadeIn third">
+                <select class="form-control fadeIn third" th:field="*{place}"  id="dropPlace" th:disabled="!${startDateTime} or !${endDateTime} or !${location}">
+                    <option value="0">Выбрать место</option>
+                    <option th:each="place : ${places}" th:value="${place.id}" th:text="${place.name}"></option>
+                </select>
+                <p class="error" th:each="error : ${#fields.errors('place')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <input type="submit" class="ticket fadeIn fourth" value="Забронировать место" />
+        </form>
+        <div>
+            <div>
+                <a class="back-ans ticket fadeIn fourth main" href="/" >На главную</a>
+            </div>
+        </div>
     </div>
 </div>
+
 
 </body>
 </html>
