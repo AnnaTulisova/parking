@@ -6,6 +6,7 @@
     <title>Рады Вас видеть!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -31,9 +32,29 @@
         </div>
     </nav>
 </header>
-
-<h1 th:inline="text">Приветствуем, [[${#authentication.getPrincipal().getUsername()}]] админ!</h1>
-
+<div class="fadeInDown contact-div" id="formContent">
+    <div class="contact-info">
+        <div class="fadeIn first">
+            <h2 th:inline="text">
+                <p>Приветствуем Вас!</p>
+                <p style="color:darkblue;">Вы зашли под аккаунтом [[${#authentication.getPrincipal().getUsername()}]]! </p>
+            </h2>
+            <p> Вы находитесь в системе паркинга "AutoCity".</p>
+            <p> В рамках сайта Вы можете:</p>
+            <ul class="contact-ul">
+                <li class="nav-item">
+                    <a th:href="@{/reservation-list-admin}">Получить доступ ко всем текущим резервированиям </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/reservation-list-admin}">Получить управление над всеми текущими резервированиями </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="contact-image fadeIn second">
+        <img class="about-image" th:src="@{/images/parking4.jpeg}" />
+    </div>
+</div>
 
 </body>
 </html>

@@ -37,6 +37,20 @@
 <script
         th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
 <script th:inline="javascript">
+    function checkDate() {
+            let empty = false;
+            empty = $('#endDateTime').val().length == 0 || $('#startDateTime').val().length == 0;
+            if (empty)
+            {
+              $('#dropLocation').attr('disabled', 'disabled');
+              $('#dropPlace').attr('disabled', 'disabled');
+            }
+            else
+            {
+              $('#dropLocation').attr('disabled', false);
+              $('#dropPlace').attr('disabled', false);
+            }
+        }
     $(document).ready(function () {
         //$('#findPlace').click(findPlace);
         $('#dropLocation').change(findPlace);
@@ -61,9 +75,11 @@
             });
         }
 
+        checkDate();
+
         $('#endDateTime').on('input', function() {
             let empty = false;
-            empty = $('#endDateTime').val().length == 0; // | $('#startDateTime').val().length == 0;
+            empty = $('#endDateTime').val().length == 0 || $('#startDateTime').val().length == 0;
             if (empty)
             {
               $('#dropLocation').attr('disabled', 'disabled');
@@ -79,7 +95,7 @@
 
     </script>
 
-<div class="wrapper fadeInDown">
+<div class="wrapper fadeInDown reservation">
     <div id="formContent">
         <div class="fadeIn first">
             <h1>Бронирование места</h1>
@@ -123,6 +139,9 @@
                 <a class="back-ans ticket fadeIn fourth main" href="/" >На главную</a>
             </div>
         </div>
+    </div>
+    <div id="formContent_img">
+        <img th:src="@{/images/park_schema.png}" />
     </div>
 </div>
 

@@ -57,17 +57,18 @@ public class AdminController {
         return new ModelAndView("reservation-list-admin", "reservations", reservations);
     }
 
-    @GetMapping("/reservation-filter")
-    public String filterReservationList(@RequestParam("startDate") String startDate,
-                                        WebRequest request, Model model)
+    @PostMapping("/reservation-filter")
+    public ModelAndView filterReservationList(@ModelAttribute("startDate") String startDate,
+                                        WebRequest request)
     {
         Collection<ReservationExtra> reservations = reservationService
                 .findAllByStartDateTime(startDate)
                 .stream()
                 .map(ReservationExtra::new)
                 .collect(Collectors.toList());
-        model.addAttribute("reservations", reservations).addAttribute("startDate", startDate).addAttribute("filtered", true);
-        return "reservation-list-admin";
+        ModelAndView modelAndView = new ModelAndView("reservation-list-admin");
+        modelAndView.addObject("reservations", reservations).addObject("startDate", startDate).addObject("filtered", true);
+        return modelAndView;
     }
 
     @GetMapping("/pdf-list")

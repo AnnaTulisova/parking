@@ -6,6 +6,7 @@
     <title>О нас</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -26,5 +27,18 @@
         </ul>
     </nav>
 </header>
+<div class="about-main fadeInDown" id="formContent">
+    <div class="about-image-div fadeIn first">
+        <img class="about-image" th:src="@{/images/parking.jpg}" />
+    </div>
+    <div class="about-text-div fadeIn second">
+        <p><b>AutoCity</b> – это сервис, который подготовит место каждому автомобилю твоего города!</p>
+        <p><b>AutoCity</b> – это тот самый паркинг-сервис, с которым клиенты никогда не станут беспокоиться о том, будет ли место для парковки. С этим сервисом не придётся искать место «не под знаком».</p>
+        <p><b>AutoCity</b> – это инструмент, позволяющий водителю заранее выбрать место на парковке, на определённое время. При этом место будет забронировано, и никто другой уже точно не сможет его занять.</p>
+        <p>Компания <b>AutoCity</b> существует с 2019 года, однако уже сейчас занимает лидирующие позиции в своей нише.</p>
+
+    </div>
+
+</div>
 </body>
 </html>

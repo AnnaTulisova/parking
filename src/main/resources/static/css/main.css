@@ -135,3 +135,111 @@ input[type=text]:placeholder, input[type=email]:placeholder, input[type=date]:pl
 .main {
     margin: 0 0 20px 0px;
 }
+
+.reservation {
+    align-items: unset !important;
+    flex-direction: row !important;
+}
+
+.about-image-div, .about-text-div{
+    margin: 10px;
+    display: inline-block;
+}
+.about-text-div{
+    padding: 30px;
+    background: aliceblue;
+}
+
+.about-image {
+    position: relative;
+    float: left;
+    max-width: 100%;
+}
+
+.about-main {
+    margin:30px;
+    text-align: justify!important;
+    display: flex;
+    width: auto !important;
+    border-radius: initial !important;
+    max-width: 100%!important;
+}
+
+.contact-info {
+    padding: 30px;
+    background: aliceblue;
+}
+
+.contact-ul {
+    font-size:15px;
+}
+
+.contact-div {
+    display: inline-flex;
+    background: aliceblue;
+    text-align: justify !important;
+    min-width: 100%;
+}
+
+.contact-image {
+    margin: 100px;
+}
+
+.reservation-result {
+    text-align: initial !important;
+    padding: 20px !important;
+}
+
+.reservation-result-btn{
+    margin: 15px 1px;
+}
+
+table {
+  table-layout: fixed;
+  width: 100%;
+  margin: 10px 0;
+  border-collapse: collapse;
+  border: 1px solid #e5e5e5;
+}
+
+thead th:nth-child(1) {
+  width: 7.5%;
+}
+
+thead th:nth-child(2) {
+  width: 7.5%;
+}
+
+thead th:nth-child(3) {
+  width: 10%;
+}
+
+thead th:nth-child(4) {
+  width: 10%;
+}
+
+thead th:nth-child(5) {
+  width: 10%;
+}
+
+thead th:nth-child(6) {
+  width: 10%;
+}
+
+thead th:nth-child(7) {
+  width: 10%;
+}
+
+thead th:nth-child(8) {
+  width: 10%;
+}
+thead th:nth-child(9) {
+  width: 5%;
+}
+thead th:nth-child(10) {
+  width: 25%;
+}
+th, td {
+  padding: 20px;
+  border: 1px solid #e5e5e5;
+}

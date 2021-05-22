@@ -26,7 +26,7 @@ h2 {
   padding: 20px;
 }
 
-#formContent {
+#formContent, #formContent_img {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
@@ -39,6 +39,12 @@ h2 {
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   text-align: center;
 }
+#formContent_img{
+    max-height: 315px;
+    padding: 15px;
+    margin: 10%;
+    }
+
 
 #formFooter {
   background-color: #f6f6f6;

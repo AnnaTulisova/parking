@@ -6,6 +6,7 @@
     <title>Контакты</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -26,5 +27,52 @@
         </ul>
     </nav>
 </header>
+<div class="fadeInDown contact-div" id="formContent">
+    <div>
+        <div class="contact-info fadeIn first">
+            <H1>Наши адреса:</H1>
+            <ul class="contact-ul">
+                <li class="nav-item">
+                    Федерации, 97
+                </li>
+                <li class="nav-item">
+                    Северный Венец, 32
+                </li>
+                <li class="nav-item">
+                    Пушкинская, 44
+                </li>
+            </ul>
+        </div>
+        <div class="contact-info fadeIn second">
+            <H1>Наш основной офис:</H1>
+            <ul class="contact-ul">
+                <li class="nav-item">
+                    Адрес: г. Ульяновск, переулок Федерации, 112
+                </li>
+                <li class="nav-item">
+                    Телефон: 8-812-718-52-40
+                </li>
+                <li class="nav-item">
+                    Email: <a href="mailto:auto@city.com">auto@city.com</a>
+                </li>
+            </ul>
+        </div>
+        <div class="contact-info fadeIn third">
+            <H1>Администрация:</H1>
+            <ul class="contact-ul">
+                <li class="nav-item">
+                    Генеральный директор: <a href="mailto:nicolaevAlexey@gmail.com">Алексей Николаев</a>
+                </li>
+                <li class="nav-item">
+                    Администратор: <a href="mailto:peterPeter@gmail.com">Петр Петров</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="contact-image fadeIn fourth">
+        <img class="about-image" th:src="@{/images/parking2.jpg}" />
+    </div>
+
+</div>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <title>Забронировано!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -33,10 +34,14 @@
         </div>
     </nav>
 </header>
-    <h1>Ваше место успешно забронировано!</h1>
-    <form action="/reservation/reservation-result" object="${reservation}" method="GET" enctype="utf8">
-        <div>
-            Данные о водителе:
+<div class="wrapper fadeInDown">
+<div id="formContent" class="reservation-result">
+    <div class="fadeIn first" style="text-align:center;">
+        <h1>Ваше место успешно забронировано!</h1>
+    </div>
+
+    <form action="/reservation/reservation-result" object="${reservation}" method="GET" enctype="utf8" style="background: aliceblue;">
+        <div class="fadeIn second">
             <div>
                 <label>Имя: </label>
                 <label>[[ ${reservation.getUser().getFirstName()} ]]</label>
@@ -46,37 +51,39 @@
                 <label>[[ ${reservation.getUser().getLastName()} ]]</label>
             </div>
         </div>
-        <div>
+        <div class="fadeIn second">
             <label>Номер автомобиля: </label>
             <label>[[ ${reservation.getCarNumber()} ]]</label>
         </div>
-        <div>
+        <div class="fadeIn second">
             <label>Дата и время начала бронирования: </label>
             <label>[[ ${reservation.getStartDateTime()} ]]</label>
         </div>
-        <div>
+        <div class="fadeIn third">
             <label>Дата и время окончания бронирования: </label>
             <label>[[ ${reservation.getEndDateTime()} ]]</label>
         </div>
-        <div>
+        <div class="fadeIn third">
             <label>Расположение: </label>
             <label>[[ ${reservation.getLocation().getAddress()} ]]</label>
         </div>
-        <div>
+        <div class="fadeIn third">
             <label>Место: </label>
             <label>[[ ${reservation.getPlace().getName()} ]]</label>
         </div>
     </form>
-    <a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="ticket ticket-admin">Талон в pdf </a>
-    <div>
-        <div>
-            <a class="ticket back-ans" href="/" >На главную!</a>
+    <div class="fadeIn fourth" style="text-align:center;">
+        <div class="reservation-result-btn">
+            <a class="ticket yes-ans" href="/reservation" >Забронировать ещё!</a>
         </div>
-        <div>
-            <a class="ticket" href="/reservation" >Забронировать ещё!</a>
+        <div class="reservation-result-btn">
+            <a class="ticket" href="/" >На главную</a>
         </div>
-
+        <div class="reservation-result-btn">
+            <a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="ticket ticket-admin">Талон в pdf </a>
+        </div>
     </div>
-
+</div>
+</div>
 </body>
 </html>

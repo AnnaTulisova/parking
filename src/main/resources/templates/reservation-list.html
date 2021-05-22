@@ -5,6 +5,7 @@
     <title>Список бронирований</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -34,34 +35,40 @@
         </div>
     </nav>
 </header>
-<h1 th:inline="text">Список забронированных мест</h1>
+<div class="fadeInDown contact-div" id="formContent">
+    <div style="margin:10px">
+        <div class="contact-info fadeIn first">
+            <h1 th:inline="text">Список забронированных мест</h1>
+        </div>
 
-<div>
-    <table>
-        <thead>
-        <tr>
-            <th> Номер автомобиля </th>
-            <th> Дата и время начала бронирования </th>
-            <th> Дата и время окончания бронирования </th>
-            <th> Расположение </th>
-            <th> Место </th>
-            <th> Управление </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${reservations.empty}">
-            <td colspan="2"> Пока не сделано ни одного бронирования </td>
-        </tr>
-        <tr th:each="reservation : ${reservations}">
-            <td><span th:text="${reservation.getCarNumber()}"> StartDateTime </span></td>
-            <td><span th:text="${reservation.getStartDateTime()}"> StartDateTime </span></td>
-            <td><span th:text="${reservation.getEndDateTime()}"> EndDateTime </span></td>
-            <td><span th:text="${reservation.getLocation().getAddress()}"> Location </span></td>
-            <td><span th:text="${reservation.getPlace().getName()}"> Place </span></td>
-            <td><span><a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="ticket ticket-admin">Талон в pdf </a></span></td>
-        </tr>
-        </tbody>
-    </table>
+        <div class="fadeIn second">
+        <table>
+            <thead>
+            <tr>
+                <th> Номер автомобиля </th>
+                <th> Дата и время начала бронирования </th>
+                <th> Дата и время окончания бронирования </th>
+                <th> Расположение </th>
+                <th> Место </th>
+                <th> Управление </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${reservations.empty}">
+                <td colspan="2"> Пока не сделано ни одного бронирования </td>
+            </tr>
+            <tr th:each="reservation : ${reservations}">
+                <td><span th:text="${reservation.getCarNumber()}"> StartDateTime </span></td>
+                <td><span th:text="${reservation.getStartDateTime()}"> StartDateTime </span></td>
+                <td><span th:text="${reservation.getEndDateTime()}"> EndDateTime </span></td>
+                <td><span th:text="${reservation.getLocation().getAddress()}"> Location </span></td>
+                <td><span th:text="${reservation.getPlace().getName()}"> Place </span></td>
+                <td><span><a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="ticket ticket-admin">Талон в pdf </a></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
 </div>
 
 </body>
