@@ -10,5 +10,13 @@ import java.util.*;
 public interface LocationRepository extends JpaRepository<Location, Long> {
     Location findByAddress(String address);
 
-    //Collection<Location> findAllWhereLocationIdNotIn(Collection<Long> ids);
+    //@Query("select l from Location l where address like '%?#{#address}%' and deleted = false")
+    Collection<Location>findByAddressContaining(String address);
+
+    @Query("select l from Location l where deleted = false")
+    Collection<Location> findAllLocations();
+
+    @Modifying
+    @Query("update Location set deleted = true where id = ?#{#locationId}")
+    void softDeleteById(long locationId);
 }

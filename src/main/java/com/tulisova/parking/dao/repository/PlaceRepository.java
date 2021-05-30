@@ -11,6 +11,18 @@ import java.util.*;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
     Collection<Place> findByLocationId(Long locationId);
+
+    @Query("select p from Place p where deleted = false")
+    Collection<Place> findAllPlaces();
+
     @Query("SELECT place.id FROM Reservation WHERE location.id = ?#{#locationId} AND startDateTime <= ?#{#startDateTime} AND endDateTime >= ?#{#startDateTime} ")
     Collection<Long> findAllReservedPlaceIds(@Param("locationId") Long locationId, @Param("startDateTime") LocalDateTime startDateTime);
+
+    @Modifying
+    @Query("update Place set deleted = true where location_id = ?#{#locationId}")
+    void softDeleteByLocationId(long locationId);
+
+    @Modifying
+    @Query("update Place set deleted = true where place_id = ?#{#placeId}")
+    void softDeleteByPlaceId(Long placeId);
 }
