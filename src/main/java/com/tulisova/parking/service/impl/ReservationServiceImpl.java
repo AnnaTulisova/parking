@@ -1,6 +1,5 @@
 package com.tulisova.parking.service.impl;
 
-import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.dao.repository.*;
 import com.tulisova.parking.service.*;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.*;
 
 import java.time.*;
 import java.util.*;
-import java.util.stream.*;
 
 @Service
 @RequiredArgsConstructor
