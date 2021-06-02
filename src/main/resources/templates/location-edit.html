@@ -27,7 +27,10 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/location-list-admin}">Добавить локацию</a>
             </li>
         </ul>
         <div id="logout">
@@ -46,9 +49,10 @@
 <div class="wrapper fadeInDown reservation">
     <div id="formContent">
         <div class="fadeIn first">
-            <h1>Добавление расположения</h1>
+            <h1>Редактирование расположения</h1>
         </div>
-        <form th:action="@{/location-add}" th:object="${location}" method="POST" id = "reservationForm" enctype="utf8">
+        <form th:action="@{/location-edit}" th:object="${location}" method="POST" id = "reservationForm" enctype="utf8">
+            <input th:field="*{id}" type="hidden"/>
             <div class="fadeIn second">
                 <input th:field="*{address}" type="text" placeholder="Адрес расположения"/>
                 <p class="error" th:each="error: ${#fields.errors('address')}"
@@ -59,13 +63,16 @@
                 <p class="error" th:each="error : ${#fields.errors('tenMinuteCoast')}"
                    th:text="${error}">Validation error</p>
             </div>
-            <div class="fadeIn third">
-                <input class="fadeIn third"  type="text" th:field="*{places}" id="places" placeholder="Места для расположения"/>
-                <p class="error" th:each="error : ${#fields.errors('places')}"
-                   th:text="${error}">Validation error</p>
-            </div>
-            <input type="submit" class="ticket fadeIn fourth" value="Добавить расположение" />
+            <input type="submit" class="ticket fadeIn fourth" value="Редактировать расположение" />
         </form>
+        <div>
+            <div>
+                <a th:href=@{/location-about/{locationId}(locationId=${location.getId()})}
+                   class="back-ans ticket fadeIn fourth main"
+                   style="padding:15px 30px !important; background: #7eea46 !important;">Редактирования список мест локации</a>
+            </div>
+        </div>
+
         <div>
             <div>
                 <a class="back-ans ticket fadeIn fourth main" href="/index-admin" >На главную</a>
@@ -76,7 +83,5 @@
         <img th:src="@{/images/park_schema.png}" />
     </div>
 </div>
-
-
 </body>
 </html>

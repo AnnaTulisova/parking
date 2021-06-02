@@ -4,12 +4,14 @@ import com.tulisova.parking.dao.model.*;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import java.time.*;
 import java.util.*;
 
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, Long> {
+    @Query("select p from Place p where deleted = false and location_id = ?#{#locationId}")
     Collection<Place> findByLocationId(Long locationId);
 
     @Query("select p from Place p where deleted = false")
@@ -23,6 +25,7 @@ public interface PlaceRepository extends JpaRepository<Place, Long> {
     void softDeleteByLocationId(long locationId);
 
     @Modifying
-    @Query("update Place set deleted = true where place_id = ?#{#placeId}")
+    @Transactional
+    @Query("update Place set deleted = true where id = ?#{#placeId}")
     void softDeleteByPlaceId(Long placeId);
 }

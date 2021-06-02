@@ -10,6 +10,24 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
+<script
+        th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        //$('#image-btn').change(loadFile(event));
+
+        function loadFile(event) {
+            var output = document.getElementById('upload-img');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+              URL.revokeObjectURL(output.src) // free memory
+            }
+          };
+     });
+
+    </script>
+
 <body>
 <header>
     <nav class="navbar navbar-expand-sm bg-light">
@@ -27,7 +45,7 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
             </li>
         </ul>
         <div id="logout">
@@ -48,9 +66,9 @@
         <div class="fadeIn first">
             <h1>Добавление расположения</h1>
         </div>
-        <form th:action="@{/location-add}" th:object="${location}" method="POST" id = "reservationForm" enctype="utf8">
+        <form th:action="@{/location-add}" th:object="${location}" method="POST" id = "reservationForm" enctype="multipart/form-data">
             <div class="fadeIn second">
-                <input th:field="*{address}" type="text" placeholder="Адрес расположения"/>
+                <input th:field="*{address}" type="text" placeholder="Адрес локации"/>
                 <p class="error" th:each="error: ${#fields.errors('address')}"
                    th:text="${error}">Validation error</p>
             </div>
@@ -60,10 +78,21 @@
                    th:text="${error}">Validation error</p>
             </div>
             <div class="fadeIn third">
-                <input class="fadeIn third"  type="text" th:field="*{places}" id="places" placeholder="Места для расположения"/>
+                <input class="fadeIn third"  type="text" th:field="*{places}" id="places" placeholder="Места для локации"/>
                 <p class="error" th:each="error : ${#fields.errors('places')}"
                    th:text="${error}">Validation error</p>
             </div>
+            <div>
+                <div>
+                    <input type="file" class="back-ans ticket fadeIn fourth main"
+                           th:field="*{picture}" id="image-btn" name="image" accept="image/png, image/jpeg"
+                           onchange="document.getElementById('upload-img').src = window.URL.createObjectURL(this.files[0])"/>
+                    <p class="error" th:each="error : ${#fields.errors('picture')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+            </div>
+
             <input type="submit" class="ticket fadeIn fourth" value="Добавить расположение" />
         </form>
         <div>
@@ -73,7 +102,7 @@
         </div>
     </div>
     <div id="formContent_img">
-        <img th:src="@{/images/park_schema.png}" />
+        <img id="upload-img" style="max-width: inherit;" th:src="*{picture}" />
     </div>
 </div>
 

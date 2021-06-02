@@ -63,6 +63,10 @@
                 <label>Места: </label>
                 <label>[[ ${location.getPlaces()} ]]</label>
             </div>
+            <div class="fadeIn third">
+                <label>Схема локации: </label>
+               <img th:src="${location.getPicture().getOriginalFilename()}">
+            </div>
         </form>
         <div class="fadeIn fourth" style="text-align:center;">
             <div class="reservation-result-btn">
@@ -72,7 +76,7 @@
                 <a class="ticket" href="/index-admin" >На главную</a>
             </div>
             <div class="reservation-result-btn">
-                <a th:href=@{/edit-location/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Редакировать расположение </a>
+                <a th:href=@{/edit-location/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Редакировать локацию</a>
             </div>
         </div>
     </div>

@@ -21,6 +21,9 @@ public class Location {
 
     private Double tenMinuteCoast;
 
+    @Lob
+    private byte[] picture;
+
     @JsonIgnore
     private Boolean deleted;
 

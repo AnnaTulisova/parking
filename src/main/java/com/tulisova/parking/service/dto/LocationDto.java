@@ -5,6 +5,7 @@ import com.tulisova.parking.service.*;
 import com.tulisova.parking.service.impl.*;
 import lombok.*;
 import lombok.experimental.*;
+import org.springframework.web.multipart.*;
 
 @Data
 @Accessors(chain = true)
@@ -18,6 +19,8 @@ public class LocationDto {
     private Double tenMinuteCoast;
 
     private String places;
+
+    private MultipartFile picture;
 
     public LocationDto(Location dbLocation, String places) {
 

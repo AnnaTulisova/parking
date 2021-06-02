@@ -20,7 +20,7 @@ public class Place {
     private Boolean deleted;
 
     @JsonIgnore
-    @ManyToOne (optional=false, cascade=CascadeType.ALL)
+    @ManyToOne (optional=false)
     @JoinColumn (name="location_id")
     private Location location;
 }

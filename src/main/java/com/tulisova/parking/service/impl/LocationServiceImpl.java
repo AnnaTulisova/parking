@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
+import java.io.*;
 import java.time.*;
 import java.util.*;
 import java.util.stream.*;
@@ -25,14 +26,16 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Location createLocation(LocationDto locationDto)
-    {
+    public Location createLocation(LocationDto locationDto) throws IOException {
         Location toDBLocation = new Location()
                 .setAddress(locationDto.getAddress())
                 .setTenMinuteCoast(locationDto.getTenMinuteCoast())
-                .setDeleted(false);
+                .setDeleted(false)
+                .setPicture(locationDto.getPicture().getBytes());
+
 
         Location fromDBLocation = locationRepository.save(toDBLocation);
+
 
         Collection<String> placeList = Arrays.asList(locationDto.getPlaces().split(";"));
         Collection<Place> placesToAdd = placeList.stream().map(placeName -> new Place().setLocation(fromDBLocation).setName(placeName).setDeleted(false)).collect(Collectors.toList());
