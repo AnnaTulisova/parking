@@ -1,5 +1,6 @@
 package com.tulisova.parking.dao.model;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import lombok.experimental.*;
 
@@ -15,6 +16,11 @@ public class Place {
 
     String name;
 
-    @OneToOne
+    @JsonIgnore
+    private Boolean deleted;
+
+    @JsonIgnore
+    @ManyToOne (optional=false)
+    @JoinColumn (name="location_id")
     private Location location;
 }

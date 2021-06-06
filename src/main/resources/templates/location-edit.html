@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление локации</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/location-list-admin}">Добавить локацию</a>
+            </li>
+        </ul>
+        <div id="logout">
+            <form action="/logout" method="post">
+                <input type="submit" value="Выйти из системы" id="logout-btn">
+            </form>
+        </div>
+    </nav>
+</header>
+<script
+        th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
+<script th:inline="javascript">
+
+    </script>
+
+<div class="wrapper fadeInDown reservation">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h1>Редактирование расположения</h1>
+        </div>
+        <form th:action="@{/location-edit}" th:object="${location}" method="POST" id = "reservationForm" enctype="utf8">
+            <input th:field="*{id}" type="hidden"/>
+            <div class="fadeIn second">
+                <input th:field="*{address}" type="text" placeholder="Адрес расположения"/>
+                <p class="error" th:each="error: ${#fields.errors('address')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="fadeIn second">
+                <input class="fadeIn second" type="text" th:field="*{tenMinuteCoast}" id="tenMinuteCoast" placeholder="Стоимость за 10 минут бронирования"/>
+                <p class="error" th:each="error : ${#fields.errors('tenMinuteCoast')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <input type="submit" class="ticket fadeIn fourth" value="Редактировать расположение" />
+        </form>
+        <div>
+            <div>
+                <a th:href=@{/location-about/{locationId}(locationId=${location.getId()})}
+                   class="back-ans ticket fadeIn fourth main"
+                   style="padding:15px 30px !important; background: #7eea46 !important;">Редактирования список мест локации</a>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <a class="back-ans ticket fadeIn fourth main" href="/index-admin" >На главную</a>
+            </div>
+        </div>
+    </div>
+    <div id="formContent_img">
+        <img th:src="@{/images/park_schema.png}" />
+    </div>
+</div>
+</body>
+</html>

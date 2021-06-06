@@ -27,10 +27,10 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location}">Добаить локацию</a>
+                <a class="nav-link" th:href="@{/location}">Добавить расположение</a>
             </li>
         </ul>
         <div id="logout">
@@ -43,47 +43,25 @@
 <div class="wrapper fadeInDown">
     <div id="formContent" class="reservation-result">
         <div class="fadeIn first" style="text-align:center;">
-            <h1>Вы уверены, что хотите удалить бронирование?</h1>
+            <h1>Вы уверены, что хотите удалить расположение?</h1>
         </div>
 
-        <form action="/reservation-remove" object="${reservation}" method="POST" enctype="utf8" style="background: aliceblue;">
+        <form action="/place-remove" object="${place}" method="POST" enctype="utf8" style="background: aliceblue;">
             <div class="fadeIn second">
                 <div>
-                    <label>Имя: </label>
-                    <label>[[ ${reservation.getUser().getFirstName()} ]]</label>
+                    <label>Название: </label>
+                    <label>[[ ${place.getName()} ]]</label>
                 </div>
                 <div>
-                    <label>Фамилия: </label>
-                    <label>[[ ${reservation.getUser().getLastName()} ]]</label>
+                    <label>Расположение: </label>
+                    <label>[[ ${place.getLocation().getAddress()} ]]</label>
                 </div>
-            </div>
-            <div class="fadeIn second">
-                <label>Номер автомобиля: </label>
-                <label>[[ ${reservation.getCarNumber()} ]]</label>
-            </div>
-            <div class="fadeIn second">
-                <label>Время начала бронирования: </label>
-                <label>[[ ${reservation.getStartDateTime()} ]]</label>
-            </div>
-            <div class="fadeIn third">
-                <label>Время окончания бронирования: </label>
-                <label>[[ ${reservation.getEndDateTime()} ]]</label>
-            </div>
-            <div class="fadeIn third">
-                <label>Расположение: </label>
-                <label>[[ ${reservation.getLocation().getAddress()} ]]</label>
-            </div>
-            <div class="fadeIn third">
-                <label>Место: </label>
-                <label>[[ ${reservation.getPlace().getName()} ]]</label>
             </div>
             <div class="fadeIn fourth" style="text-align: center; background: white;">
-                <input type="hidden" th:name="reservationId" th:value = "${reservation.getId()}">
+                <input type="hidden" th:name="placeId" th:value = "${place.getId()}">
                 <input class="yes-ans ticket" type="submit"  style="margin: 10px 0px;" value="Да"/>
-                <a class="back-ans ticket" href="/reservation-list-admin" >Нет, хочу обратно к списку</a>
+                <a th:href=@{/location-about/{locationId}(locationId=${place.getLocation().getId()})} class="ticket">Нет, хочу обратно к списку</a>
             </div>
-
-
         </form>
     </div>
 </div>

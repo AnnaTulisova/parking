@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех расположений</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/index-admin">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/location}">Добавить локацию</a>
+            </li>
+        </ul>
+        <div id="logout">
+            <form action="/logout" method="post">
+                <input type="submit" value="Выйти из системы" id="logout-btn">
+            </form>
+        </div>
+    </nav>
+</header>
+
+
+<div class="fadeInDown contact-div" id="formContent">
+<div style="margin:10px">
+    <div class="contact-info fadeIn first">
+        <h1 th:inline="text">Список локаций</h1>
+    </div>
+    <div class="fadeIn second">
+        <div>
+            <form th:action="@{/location-filter}"  method="post">
+                <input type="text" th:name="address" th:value="${address}" class="filter-field">
+                <input class="ticket filter" type="submit" value="Найти по адресу"/>
+            </form>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th> Адрес </th>
+                <th> Стоимость за 10 минут бронирования(руб.) </th>
+                <th> Список мест </th>
+                <th id="location-settings"> Управление </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${locations.empty}">
+                <td colspan="4"> Пока нет ни одного расположения </td>
+            </tr>
+            <tr th:each="location : ${locations}">
+                <td><span th:text="${location.getAddress()}"> LastName </span></td>
+                <td><span th:text="${location.getTenMinuteCoast()}"> FirstName </span></td>
+                <td><span th:text="${location.getPlaces()}"> Email </span></td>
+                <td><span>
+                    <a th:href=@{/location-remove/{locationId}(locationId=${location.getId()})} class="delete ticket">Удалить локацию</a>
+                    <a th:href=@{/location-edit/{locationId}(locationId=${location.getId()})} class="ticket">Редактировать локацию</a>
+                    <a th:href=@{/location-about/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Подробнее о локации</a>
+                </span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

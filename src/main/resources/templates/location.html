@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление локации</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<script
+        th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        //$('#image-btn').change(loadFile(event));
+
+        function loadFile(event) {
+            var output = document.getElementById('upload-img');
+            output.src = URL.createObjectURL(event.target.files[0]);
+            output.onload = function() {
+              URL.revokeObjectURL(output.src) // free memory
+            }
+          };
+     });
+
+    </script>
+
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+            </li>
+        </ul>
+        <div id="logout">
+            <form action="/logout" method="post">
+                <input type="submit" value="Выйти из системы" id="logout-btn">
+            </form>
+        </div>
+    </nav>
+</header>
+<script
+        th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
+<script th:inline="javascript">
+
+    </script>
+
+<div class="wrapper fadeInDown reservation">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h1>Добавление расположения</h1>
+        </div>
+        <form th:action="@{/location-add}" th:object="${location}" method="POST" id = "reservationForm" enctype="multipart/form-data">
+            <div class="fadeIn second">
+                <input th:field="*{address}" type="text" placeholder="Адрес локации"/>
+                <p class="error" th:each="error: ${#fields.errors('address')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="fadeIn second">
+                <input class="fadeIn second" type="text" th:field="*{tenMinuteCoast}" id="tenMinuteCoast" placeholder="Стоимость за 10 минут бронирования"/>
+                <p class="error" th:each="error : ${#fields.errors('tenMinuteCoast')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="fadeIn third">
+                <input class="fadeIn third"  type="text" th:field="*{places}" id="places" placeholder="Места для локации"/>
+                <p class="error" th:each="error : ${#fields.errors('places')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div>
+                <div>
+                    <input type="file" class="back-ans ticket fadeIn fourth main"
+                           th:field="*{picture}" id="image-btn" name="image" accept="image/png, image/jpeg"
+                           onchange="document.getElementById('upload-img').src = window.URL.createObjectURL(this.files[0])"/>
+                    <p class="error" th:each="error : ${#fields.errors('picture')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+
+            </div>
+
+            <input type="submit" class="ticket fadeIn fourth" value="Добавить расположение" />
+        </form>
+        <div>
+            <div>
+                <a class="back-ans ticket fadeIn fourth main" href="/index-admin" >На главную</a>
+            </div>
+        </div>
+    </div>
+    <div id="formContent_img">
+        <img id="upload-img" style="max-width: inherit;" th:src="*{picture}" />
+    </div>
+</div>
+
+
+</body>
+</html>

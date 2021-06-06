@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Локация добавлена!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
+    <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contacts">Контакты</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">О нас</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+            </li>
+        </ul>
+        <div id="logout">
+            <form action="/logout" method="post">
+                <input type="submit" value="Выйти из системы" id="logout-btn">
+            </form>
+        </div>
+    </nav>
+</header>
+<script
+        th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
+<script th:inline="javascript">
+
+    </script>
+
+<div class="wrapper fadeInDown reservation">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h1>Расположение добавлено!</h1>
+        </div>
+        <form action="/location-result" object="${location}" method="GET" enctype="utf8" style="background: aliceblue;">
+            <div class="fadeIn second">
+                <div>
+                    <label>Адрес: </label>
+                    <label>[[ ${location.getAddress()} ]]</label>
+                </div>
+                <div>
+                    <label>Стоимость бронирования за 10 минут: </label>
+                    <label>[[ ${location.getTenMinuteCoast()} ]]</label>
+                </div>
+            </div>
+            <div class="fadeIn second">
+                <label>Места: </label>
+                <label>[[ ${location.getPlaces()} ]]</label>
+            </div>
+            <div class="fadeIn third">
+                <label>Схема локации: </label>
+               <img th:src="${location.getPicture().getOriginalFilename()}">
+            </div>
+        </form>
+        <div class="fadeIn fourth" style="text-align:center;">
+            <div class="reservation-result-btn">
+                <a class="ticket yes-ans" href="/location-list-admin" >Перейти к списку всех локаций</a>
+            </div>
+            <div class="reservation-result-btn">
+                <a class="ticket" href="/index-admin" >На главную</a>
+            </div>
+            <div class="reservation-result-btn">
+                <a th:href=@{/edit-location/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Редакировать локацию</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

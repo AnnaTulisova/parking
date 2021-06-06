@@ -113,7 +113,7 @@ input[type=text]:placeholder, input[type=email]:placeholder, input[type=date]:pl
 
 .filter-field {
    width: auto !important;
-   padding: 5px 5px !important;
+   padding: 10px 5px !important;
 }
 
 #logout {
@@ -217,7 +217,9 @@ thead th:nth-child(3) {
 thead th:nth-child(4) {
   width: 10%;
 }
-
+#location-settings{
+    width: 30% !important;
+}
 thead th:nth-child(5) {
   width: 10%;
 }

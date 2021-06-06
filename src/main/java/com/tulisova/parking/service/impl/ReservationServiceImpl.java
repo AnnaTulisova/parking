@@ -7,6 +7,7 @@ import com.tulisova.parking.service.dto.*;
 import lombok.*;
 import org.springframework.stereotype.*;
 
+import javax.persistence.*;
 import java.time.*;
 import java.util.*;
 
@@ -64,4 +65,14 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationRepository.findAllByStartDateTime(startDateTotal, endDateTotal);
     }
 
+    @Override
+    public Collection<Reservation> findAllByLocationId(Long locationId) {
+        return reservationRepository.findAllByLocationId(locationId);
+    }
+
+
+    @Override
+    public Collection<Reservation> findAllByPlaceId(Long placeId) {
+        return reservationRepository.findAllByPlaceId(placeId);
+    }
 }

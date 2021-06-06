@@ -14,4 +14,8 @@ public interface ReservationService {
     Reservation findById(Long id);
     void deleteByReservationId(Long id);
     Collection<Reservation> findAllByUserId(Long userId);
+
+    Collection<Reservation> findAllByLocationId(Long locationId);
+
+    Collection<Reservation> findAllByPlaceId(Long placeId);
 }
