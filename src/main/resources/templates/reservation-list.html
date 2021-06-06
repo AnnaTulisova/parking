@@ -50,6 +50,7 @@
                 <th> Дата и время окончания бронирования </th>
                 <th> Расположение </th>
                 <th> Место </th>
+                <th> Итоговая стоимость </th>
                 <th> Управление </th>
             </tr>
             </thead>
@@ -63,6 +64,7 @@
                 <td><span th:text="${reservation.getEndDateTime()}"> EndDateTime </span></td>
                 <td><span th:text="${reservation.getLocation().getAddress()}"> Location </span></td>
                 <td><span th:text="${reservation.getPlace().getName()}"> Place </span></td>
+                <td><span th:text="${reservation.getCoast()}"> Coast </span></td>
                 <td><span><a th:href=@{/pdf/{reservationId}(reservationId=${reservation.getId()})} class="ticket ticket-admin">Талон в pdf </a></span></td>
             </tr>
             </tbody>

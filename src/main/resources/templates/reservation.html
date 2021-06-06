@@ -52,7 +52,7 @@
             }
         }
     $(document).ready(function () {
-        //$('#findPlace').click(findPlace);
+
         $('#dropLocation').change(findPlace);
         function findPlace(){
             $.ajax({
@@ -66,11 +66,13 @@
                            $('#dropPlace').empty();
                            var nullOption = new Option("Выберите место", 0, false, false);
                            $('#dropPlace').append(nullOption).trigger('change');
-                           for (i=0; i< data.length; i++) {
-                               var newOption = new Option(data[i].name, data[i].id, false, false);
+                           for (i=0; i< data.places.length; i++) {
+                               var newOption = new Option(data.places[i].name, data.places[i].id, false, false);
                                $('#dropPlace').append(newOption).trigger('change');
                            }
                     }
+                    $('#upload-img').attr("src", data.locationImg);
+                    $('#temp_phrase').remove();
                 }
             });
         }
@@ -141,7 +143,8 @@
         </div>
     </div>
     <div id="formContent_img">
-        <img th:src="@{/images/park_schema.png}" />
+        <p id="temp_phrase"> Здесь будет схема выбранного Вами расположения </p>
+        <img id="upload-img" class="location-image" />
     </div>
 </div>
 

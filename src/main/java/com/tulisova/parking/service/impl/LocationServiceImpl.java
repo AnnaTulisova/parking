@@ -1,5 +1,6 @@
 package com.tulisova.parking.service.impl;
 
+import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.dao.repository.*;
 import com.tulisova.parking.service.*;
@@ -80,10 +81,13 @@ public class LocationServiceImpl implements LocationService {
         }
     }
 
-    public void editLocation(LocationDto locationDto) {
+    public void editLocation(LocationDto locationDto) throws IOException {
         Location dbLocation = locationRepository.getById(locationDto.getId());
         dbLocation.setAddress(locationDto.getAddress());
         dbLocation.setTenMinuteCoast(locationDto.getTenMinuteCoast());
+        if(!locationDto.getPicture().getOriginalFilename().isEmpty()) {
+            dbLocation.setPicture(locationDto.getPicture().getBytes());
+        }
         locationRepository.save(dbLocation);
     }
 

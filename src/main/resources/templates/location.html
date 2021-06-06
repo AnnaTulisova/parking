@@ -90,9 +90,7 @@
                     <p class="error" th:each="error : ${#fields.errors('picture')}"
                        th:text="${error}">Validation error</p>
                 </div>
-
             </div>
-
             <input type="submit" class="ticket fadeIn fourth" value="Добавить расположение" />
         </form>
         <div>
@@ -102,10 +100,8 @@
         </div>
     </div>
     <div id="formContent_img">
-        <img id="upload-img" style="max-width: inherit;" th:src="*{picture}" />
+        <img id="upload-img" class="location-image" th:src="*{picture}" />
     </div>
 </div>
-
-
 </body>
 </html>

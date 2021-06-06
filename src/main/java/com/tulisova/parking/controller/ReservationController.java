@@ -40,12 +40,15 @@ public class ReservationController {
     }
 
     @RequestMapping(value="/findPlace", method=RequestMethod.GET,produces = "application/json")
-    public @ResponseBody Collection<Place> findPlaces(@RequestParam("carNumber") String carNumber,
+    public @ResponseBody Map<String, Object> findPlaces(@RequestParam("carNumber") String carNumber,
                                                       @RequestParam("startDateTime") String startDateTime,
                                                       @RequestParam("endDateTime") String endDateTime,
                                                       @RequestParam("location") Long locationId,
                                                       @RequestParam("place") Long placeId) {
-        return placeService.findFreePlaces(startDateTime, locationId);
+        Map<String, Object> result = new HashMap<>();
+        result.put("places", placeService.findFreePlaces(startDateTime, locationId));
+        result.put("locationImg", "data:image/png;base64," +Base64.getEncoder().encodeToString(locationService.findById(locationId).getPicture()));
+        return result;
     }
 
 

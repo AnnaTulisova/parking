@@ -100,7 +100,7 @@ public class AdminController {
         }
         Location addedLocation = locationService.createLocation(locationDto);
         locationDto.setId(addedLocation.getId());
-        //locationDto.setPicture(new ImageIcon(locationDto.getPicture().getBytes()).getImage());
+        locationDto.setPictureBase64(Base64.getEncoder().encodeToString(locationDto.getPicture().getBytes()));
         return new ModelAndView("location-result", "location", locationDto);
     }
 
@@ -139,16 +139,23 @@ public class AdminController {
     }
 
     @GetMapping("/location-edit/{locationId}")
-    public String prepareLocationToEdit(@PathVariable("locationId") Long locationId, WebRequest request, Model model) {
+    public String prepareLocationToEdit(@PathVariable("locationId") Long locationId, WebRequest request, Model model) throws IOException {
         Location location = locationService.findById(locationId);
-        model.addAttribute("location", new LocationDto(location, placeService.findPlacesNameByLocation(location)));
+        LocationDto locationDto = new LocationDto(location, placeService.findPlacesNameByLocation(location));
+        model.addAttribute("location", locationDto);
         return "location-edit";
     }
 
     @PostMapping("/location-edit")
     public ModelAndView editLocation(@ModelAttribute("location") @Valid  final LocationDto locationDto,
+                                       BindingResult bindingResult,
                                        final HttpServletRequest request,
-                                       final Errors errors) {
+                                       final Errors errors) throws IOException {
+        if(bindingResult.hasErrors()) {
+            ModelAndView model = new ModelAndView("location-edit", "errors", errors);
+            model.addObject("location", locationDto);
+            return model;
+        }
         locationService.editLocation(locationDto);
         Collection<LocationDto> locations = locationService.findAllLocations();
         return new ModelAndView("location-list-admin", "locations", locations);

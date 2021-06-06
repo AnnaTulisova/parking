@@ -249,3 +249,8 @@ th, td {
 a {
     text-decoration: none !important;
 }
+
+.location-image {
+max-width: -webkit-fill-available;
+max-height: 290px;
+}

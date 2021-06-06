@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Добавление локации</title>
+    <title>Редактирование локации</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
@@ -30,7 +30,7 @@
                 <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Добавить локацию</a>
+                <a class="nav-link" th:href="@{/location}">Добавить локацию</a>
             </li>
         </ul>
         <div id="logout">
@@ -51,7 +51,7 @@
         <div class="fadeIn first">
             <h1>Редактирование расположения</h1>
         </div>
-        <form th:action="@{/location-edit}" th:object="${location}" method="POST" id = "reservationForm" enctype="utf8">
+        <form th:action="@{/location-edit}" th:object="${location}" method="POST" id = "reservationForm" enctype="multipart/form-data">
             <input th:field="*{id}" type="hidden"/>
             <div class="fadeIn second">
                 <input th:field="*{address}" type="text" placeholder="Адрес расположения"/>
@@ -63,6 +63,15 @@
                 <p class="error" th:each="error : ${#fields.errors('tenMinuteCoast')}"
                    th:text="${error}">Validation error</p>
             </div>
+            <div>
+                <div>
+                    <input type="file" class="back-ans ticket fadeIn fourth main"
+                           th:field="*{picture}" id="image-btn" name="image" accept="image/png, image/jpeg"
+                           onchange="document.getElementById('upload-img').src = window.URL.createObjectURL(this.files[0])"/>
+                    <p class="error" th:each="error : ${#fields.errors('picture')}"
+                       th:text="${error}">Validation error</p>
+                </div>
+            </div>
             <input type="submit" class="ticket fadeIn fourth" value="Редактировать расположение" />
         </form>
         <div>
@@ -72,7 +81,6 @@
                    style="padding:15px 30px !important; background: #7eea46 !important;">Редактирования список мест локации</a>
             </div>
         </div>
-
         <div>
             <div>
                 <a class="back-ans ticket fadeIn fourth main" href="/index-admin" >На главную</a>
@@ -80,7 +88,8 @@
         </div>
     </div>
     <div id="formContent_img">
-        <img th:src="@{/images/park_schema.png}" />
+        <img id="upload-img" th:src="@{'data:image/png;base64,'+${location.getPictureBase64()}}"
+             class="location-image"/>
     </div>
 </div>
 </body>

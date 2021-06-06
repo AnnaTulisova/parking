@@ -43,7 +43,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public String findPlacesNameByLocation(Location dbLocation) {
-        Collection<Place> places = placeRepository.findByLocationId(dbLocation.getId());
+        Collection<Place> places = dbLocation.getPlaces();
         return places.stream().map(Place::getName).collect(Collectors.joining(","));
     }
 

@@ -34,7 +34,8 @@
         </div>
     </nav>
 </header>
-<div class="wrapper fadeInDown">
+<div class="wrapper fadeInDown reservation">
+
 <div id="formContent" class="reservation-result">
     <div class="fadeIn first" style="text-align:center;">
         <h1>Ваше место успешно забронировано!</h1>
@@ -71,6 +72,10 @@
             <label>Место: </label>
             <label>[[ ${reservation.getPlace().getName()} ]]</label>
         </div>
+        <div class="fadeIn third">
+            <label>Итоговая стоимость: </label>
+            <label>[[ ${reservation.getCoast()} ]]</label>
+        </div>
     </form>
     <div class="fadeIn fourth" style="text-align:center;">
         <div class="reservation-result-btn">
@@ -84,6 +89,16 @@
         </div>
     </div>
 </div>
+    <div id="formContent_img">
+        <div class="fadeIn third">
+            <label>Схема расположения: </label>
+        </div>
+        <div  class="fadeIn third" style="text-align:center;">
+            <img th:src="@{'data:image/png;base64,'+ ${reservation.getLocation().getPictureBase64()}}"
+                 class="location-image" style="max-height: 260px !important;"/>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

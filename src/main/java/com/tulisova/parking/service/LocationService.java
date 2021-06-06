@@ -1,5 +1,6 @@
 package com.tulisova.parking.service;
 
+import com.tulisova.parking.dao.extra.*;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.service.dto.*;
 
@@ -19,5 +20,5 @@ public interface LocationService {
 
     void deleteByLocationId(Long locationId);
 
-    void editLocation(LocationDto locationDto);
+    void editLocation(LocationDto locationDto) throws IOException;
 }

@@ -65,7 +65,10 @@
             </div>
             <div class="fadeIn third">
                 <label>Схема локации: </label>
-               <img th:src="${location.getPicture().getOriginalFilename()}">
+            </div>
+            <div  class="fadeIn third">
+                <img th:src="@{'data:image/png;base64,'+ ${location.getPictureBase64()}}"
+                     class="location-image"/>
             </div>
         </form>
         <div class="fadeIn fourth" style="text-align:center;">

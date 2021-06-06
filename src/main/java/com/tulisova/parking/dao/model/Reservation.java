@@ -23,6 +23,8 @@ public class Reservation {
 
     private String carNumber;
 
+    private Double coast;
+
     @OneToOne
     private User user;
 

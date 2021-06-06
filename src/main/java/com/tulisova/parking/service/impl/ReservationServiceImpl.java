@@ -29,8 +29,15 @@ public class ReservationServiceImpl implements ReservationService {
                 .setEndDateTime(LocalDateTime.parse(reservationDto.getEndDateTime()))
                 .setUser(currentUser);
 
+        toDBReservation.setCoast(getTotalCoast(toDBReservation));
         reservationRepository.save(toDBReservation);
         return toDBReservation;
+    }
+
+    private Double getTotalCoast(Reservation toDBReservation) {
+        Duration duration = Duration.between(toDBReservation.getStartDateTime(), toDBReservation.getEndDateTime());
+        long diffMinutes = duration.toMinutes();
+        return (diffMinutes / 10) *  toDBReservation.getLocation().getTenMinuteCoast();
     }
 
     @Override
