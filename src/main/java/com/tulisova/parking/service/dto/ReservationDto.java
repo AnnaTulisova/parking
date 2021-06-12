@@ -26,4 +26,6 @@ public class ReservationDto {
     @NotNull(message = "Необходимо выбрать место для парковки!")
     private Place place;
 
+    private Boolean forElectroCar;
+
 }

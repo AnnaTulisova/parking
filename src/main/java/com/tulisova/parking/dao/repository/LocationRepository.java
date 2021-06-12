@@ -8,9 +8,6 @@ import java.util.*;
 
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
-    Location findByAddress(String address);
-
-    //@Query("select l from Location l where address like '%?#{#address}%' and deleted = false")
     Collection<Location>findByAddressContaining(String address);
 
     @Query("select l from Location l where deleted = false")

@@ -29,10 +29,10 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location}">Добавить локацию</a>
+                <a class="nav-link" th:href="@{/location}">Добавить расположение</a>
             </li>
         </ul>
         <div id="logout">
@@ -49,26 +49,37 @@
     <div class="contact-info fadeIn first">
         <h1 th:inline="text">Список мест</h1>
     </div>
+    <div style="margin: 10px 0;">
+        <a th:href=@{/place-add/{locationId}(locationId=${locationId})} class="ticket">Добавить место</a>
+    </div>
     <div class="fadeIn second">
         <table>
             <thead>
             <tr>
                 <th> Название </th>
+                <th id="location-dor-electro"> Для электромобилей </th>
                 <th id="location-settings"> Управление </th>
             </tr>
             </thead>
             <tbody>
             <tr th:if="${places.empty}">
-                <td colspan="2"> Пока нет ни одного места </td>
+                <td colspan="3"> Пока нет ни одного места </td>
             </tr>
             <tr th:each="place : ${places}">
                 <td><span th:text="${place.getName()}"> Name </span></td>
+                <td><input type="checkbox" name="forElectro" th:checked="*{place.forElectroCars}" readonly/> </td>
                 <td><span>
-                    <a th:href=@{/place-remove/{placeId}(placeId=${place.getId()})} class="delete ticket">Удалить расположение</a>
+                    <a th:href=@{/place-remove/{placeId}(placeId=${place.getId()})} class="delete ticket">Удалить место</a>
+                    <a th:href=@{/place-edit/{placeId}(placeId=${place.getId()})} class="ticket">Редактировать место</a>
                 </span></td>
             </tr>
             </tbody>
         </table>
+        <div>
+            <div>
+                <a class="back-ans ticket fadeIn fourth main" href="/location-list-admin" >Ко всем локациям</a>
+            </div>
+        </div>
     </div>
 </div>
 </div>

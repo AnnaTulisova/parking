@@ -11,7 +11,7 @@ body {
 }
 
 
-input[type=button], input[type=submit], input[type=reset], .ticket{
+input[type=button], input[type=submit], input[type=reset], input[type=file],.ticket{
   background-color: #56baed;
   border: none;
   color: white;
@@ -239,7 +239,10 @@ thead th:nth-child(9) {
   width: 5%;
 }
 thead th:nth-child(10) {
-  width: 25%;
+  width: 8%;
+}
+thead th:nth-child(11) {
+  width: 20%;
 }
 th, td {
   padding: 20px;
@@ -253,4 +256,8 @@ a {
 .location-image {
 max-width: -webkit-fill-available;
 max-height: 290px;
+}
+
+input[type="checkbox"][readonly] {
+  pointer-events: none;
 }

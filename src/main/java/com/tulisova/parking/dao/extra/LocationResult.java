@@ -24,6 +24,8 @@ public class LocationResult {
 
     private String places;
 
+    private String electroPlaces;
+
     private String picture;
 
     public LocationResult(LocationDto locationDto) throws IOException {
@@ -32,6 +34,7 @@ public class LocationResult {
         this.address = locationDto.getAddress();
         this.tenMinuteCoast = locationDto.getTenMinuteCoast();
         this.places = locationDto.getPlaces();
+        this.electroPlaces = locationDto.getElectroPlaces();
         if(locationDto.getPicture() != null)
         {
             this.picture = Base64.getEncoder().encodeToString(locationDto.getPicture().getBytes());

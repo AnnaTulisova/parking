@@ -103,7 +103,6 @@ public class SecurityController {
             mav.addObject("message", "Аккаунт для такого email " + userDto.getEmail()+ " уже существует.");
             return mav;
         }
-
         return new ModelAndView("security/success-register", "user", userDto);
     }
 }

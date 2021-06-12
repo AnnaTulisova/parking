@@ -25,7 +25,7 @@ public class ReservationExtra {
 
         this.id = reservation.getId();
         this.carNumber = reservation.getCarNumber();
-        this.location = new LocationDto(reservation.getLocation(), "");
+        this.location = new LocationDto(reservation.getLocation(), "", "");
         this.place = reservation.getPlace();
         this.user = reservation.getUser();
         this.startDateTime = formatter.format(reservation.getStartDateTime());

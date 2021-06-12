@@ -3,6 +3,7 @@ package com.tulisova.parking.service.impl;
 import com.tulisova.parking.dao.model.*;
 import com.tulisova.parking.dao.repository.*;
 import com.tulisova.parking.service.*;
+import com.tulisova.parking.service.dto.*;
 import lombok.*;
 import org.springframework.stereotype.*;
 
@@ -22,13 +23,20 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Collection<Place> findFreePlaces(String startDateTime, Long locationId) {
+    public Collection<Place> findFreePlaces(String startDateTime, Long locationId, Boolean forElectroCar) {
         LocalDateTime startDateTimeTotal = LocalDateTime.parse(startDateTime);
         Collection<Long> reservedPlaceIds = placeRepository.findAllReservedPlaceIds(locationId, startDateTimeTotal);
-        return findAllByLocationId(locationId)
+        Collection<Place> foundedPlaces = findAllByLocationId(locationId)
                 .stream()
                 .filter(it-> !reservedPlaceIds.contains(it.getId()))
                 .collect(Collectors.toList());
+        if(forElectroCar) {
+            return foundedPlaces
+                    .stream()
+                    .filter(Place::getForElectroCars)
+                    .collect(Collectors.toList());
+        }
+        return foundedPlaces;
     }
 
     @Override
@@ -44,6 +52,11 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public String findPlacesNameByLocation(Location dbLocation) {
         Collection<Place> places = dbLocation.getPlaces();
+        return places.stream().map(Place::getName).collect(Collectors.joining(","));
+    }
+    @Override
+    public String findElectroPlacesNameByLocation(Location location) {
+        Collection<Place> places = location.getPlaces().stream().filter(place -> place.getForElectroCars() == true ).collect(Collectors.toList());
         return places.stream().map(Place::getName).collect(Collectors.joining(","));
     }
 
@@ -68,6 +81,24 @@ public class PlaceServiceImpl implements PlaceService {
         }
         return location.getId();
     }
+
+    @Override
+    public Place editPlace(Place place) {
+        Place dbPlace = placeRepository.getById(place.getId());
+        dbPlace.setName(place.getName());
+        dbPlace.setForElectroCars(place.getForElectroCars());
+        placeRepository.save(dbPlace);
+        return dbPlace;
+    }
+    @Override
+    public Place addPlace(PlaceDto place, Location location) {
+        Place placeToDB = new Place().setName(place.getName())
+                .setForElectroCars(place.getForElectroCars())
+                .setLocation(location).setDeleted(false);
+        Place dbPlace = placeRepository.save(placeToDB);
+        return dbPlace;
+    }
+
 
     private void softDeleteByPlaceId(Long placeId) {
         placeRepository.softDeleteByPlaceId(placeId);

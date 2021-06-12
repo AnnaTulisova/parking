@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Удалить бронирование</title>
+    <title>Редактирование локации</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
@@ -40,34 +40,38 @@
         </div>
     </nav>
 </header>
-<div class="wrapper fadeInDown">
-    <div id="formContent" class="reservation-result">
-        <div class="fadeIn first" style="text-align:center;">
-            <h1>Вы уверены, что хотите удалить место?</h1>
-        </div>
+<script
+        th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js}"></script>
+<script th:inline="javascript">
 
-        <form action="/place-remove" object="${place}" method="POST" enctype="utf8" style="background: aliceblue;">
+    </script>
+
+<div class="wrapper fadeInDown reservation">
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h1>Редактирование места</h1>
+        </div>
+        <form th:action="@{/place-edit}" th:object="${place}" method="POST" id = "reservationForm" enctype="multipart/form-data">
+            <input th:field="*{id}" type="hidden"/>
+            <div class="fadeIn second">
+                <input th:field="*{name}" type="text" placeholder="Название"/>
+                <p class="error" th:each="error: ${#fields.errors('name')}"
+                   th:text="${error}">Validation error</p>
+            </div>
             <div class="fadeIn second">
                 <div>
-                    <label>Название: </label>
-                    <label>[[ ${place.getName()} ]]</label>
-                </div>
-                <div>
-                    <label>Для электроавтомобилей: </label>
-                    <input type="checkbox" name="forElectro" th:checked="*{place.forElectroCars}" readonly/>
-<!--                    <label>[[ ${place.getLocation().getAddress()} ]]</label>-->
-                </div>
-                <div>
-                    <label>Расположение: </label>
-                    <label>[[ ${place.getLocation().getAddress()} ]]</label>
-                </div>
+                    <div style="display: inline-block; vertical-align: middle; margin: 0 10px;"> Для электромобилей: </div>
+                    <input class="fadeIn second" type="checkbox"  style="display: inline-block; vertical-align: middle;" th:field="*{forElectroCars}" id="forElectroCars"/>
+                <p class="error" th:each="error : ${#fields.errors('forElectroCars')}"
+                   th:text="${error}">Validation error</p>
             </div>
-            <div class="fadeIn fourth" style="text-align: center; background: white;">
-                <input type="hidden" th:name="placeId" th:value = "${place.getId()}">
-                <input class="yes-ans ticket" type="submit"  style="margin: 10px 0px;" value="Да"/>
-                <a th:href=@{/location-about/{locationId}(locationId=${place.getLocation().getId()})} class="ticket">Нет, хочу обратно к списку</a>
-            </div>
+            <input type="submit" class="ticket fadeIn fourth" value="Редактировать место" />
         </form>
+        <div>
+            <div>
+                <a class="back-ans ticket fadeIn fourth main" href="/index-admin" >На главную</a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

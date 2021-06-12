@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Локация добавлена!</title>
+    <title>Расположение добавлена!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <link type="text/css" href="../static/css/main.css" th:href="@{/css/main.css}" rel="stylesheet" />
     <link type="text/css" href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-sm bg-light">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/">Главная</a>
+                <a class="nav-link" href="/index-admin">Главная</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/contacts">Контакты</a>
@@ -27,7 +27,7 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
             </li>
         </ul>
         <div id="logout">
@@ -63,8 +63,12 @@
                 <label>Места: </label>
                 <label>[[ ${location.getPlaces()} ]]</label>
             </div>
+            <div class="fadeIn second" th:if="!${location.getElectroPlaces().empty}">
+                <label>Места для электроавтомобилей: </label>
+                <label>[[ ${location.getElectroPlaces()} ]]</label>
+            </div>
             <div class="fadeIn third">
-                <label>Схема локации: </label>
+                <label>Схема расположения: </label>
             </div>
             <div  class="fadeIn third">
                 <img th:src="@{'data:image/png;base64,'+ ${location.getPictureBase64()}}"
@@ -73,13 +77,13 @@
         </form>
         <div class="fadeIn fourth" style="text-align:center;">
             <div class="reservation-result-btn">
-                <a class="ticket yes-ans" href="/location-list-admin" >Перейти к списку всех локаций</a>
+                <a class="ticket yes-ans" href="/location-list-admin" >Перейти к списку всех расположений</a>
             </div>
             <div class="reservation-result-btn">
                 <a class="ticket" href="/index-admin" >На главную</a>
             </div>
             <div class="reservation-result-btn">
-                <a th:href=@{/edit-location/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Редакировать локацию</a>
+                <a th:href=@{/edit-location/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Редакировать расположение</a>
             </div>
         </div>
     </div>

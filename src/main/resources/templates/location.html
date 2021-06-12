@@ -33,7 +33,7 @@
     <nav class="navbar navbar-expand-sm bg-light">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/">Главная</a>
+                <a class="nav-link" href="/index-admin">Главная</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/contacts">Контакты</a>
@@ -45,7 +45,7 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
             </li>
         </ul>
         <div id="logout">
@@ -68,7 +68,7 @@
         </div>
         <form th:action="@{/location-add}" th:object="${location}" method="POST" id = "reservationForm" enctype="multipart/form-data">
             <div class="fadeIn second">
-                <input th:field="*{address}" type="text" placeholder="Адрес локации"/>
+                <input th:field="*{address}" type="text" placeholder="Адрес расположения"/>
                 <p class="error" th:each="error: ${#fields.errors('address')}"
                    th:text="${error}">Validation error</p>
             </div>
@@ -78,8 +78,13 @@
                    th:text="${error}">Validation error</p>
             </div>
             <div class="fadeIn third">
-                <input class="fadeIn third"  type="text" th:field="*{places}" id="places" placeholder="Места для локации"/>
+                <input class="fadeIn third"  type="text" th:field="*{places}" id="places" placeholder="Места для расположения"/>
                 <p class="error" th:each="error : ${#fields.errors('places')}"
+                   th:text="${error}">Validation error</p>
+            </div>
+            <div class="fadeIn third">
+                <input class="fadeIn third"  type="text" th:field="*{electroPlaces}" id="electroPlaces" placeholder="Места для электроавтомобилей"/>
+                <p class="error" th:each="error : ${#fields.errors('electroPlaces')}"
                    th:text="${error}">Validation error</p>
             </div>
             <div>

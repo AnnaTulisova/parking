@@ -29,10 +29,10 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location}">Добавить локацию</a>
+                <a class="nav-link" th:href="@{/location}">Добавить расположение</a>
             </li>
         </ul>
         <div id="logout">
@@ -47,7 +47,7 @@
 <div class="fadeInDown contact-div" id="formContent">
 <div style="margin:10px">
     <div class="contact-info fadeIn first">
-        <h1 th:inline="text">Список локаций</h1>
+        <h1 th:inline="text">Список расположений</h1>
     </div>
     <div class="fadeIn second">
         <div>
@@ -74,9 +74,9 @@
                 <td><span th:text="${location.getTenMinuteCoast()}"> FirstName </span></td>
                 <td><span th:text="${location.getPlaces()}"> Email </span></td>
                 <td><span>
-                    <a th:href=@{/location-remove/{locationId}(locationId=${location.getId()})} class="delete ticket">Удалить локацию</a>
-                    <a th:href=@{/location-edit/{locationId}(locationId=${location.getId()})} class="ticket">Редактировать локацию</a>
-                    <a th:href=@{/location-about/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Подробнее о локации</a>
+                    <a th:href=@{/location-remove/{locationId}(locationId=${location.getId()})} class="delete ticket">Удалить расположение</a>
+                    <a th:href=@{/location-edit/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin" style="background-color: #56baed !important;">Редактировать расположение</a>
+                    <a th:href=@{/location-about/{locationId}(locationId=${location.getId()})} class="ticket ticket-admin">Подробнее о расположении</a>
                 </span></td>
             </tr>
             </tbody>

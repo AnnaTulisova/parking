@@ -38,8 +38,13 @@ public class LocationServiceImpl implements LocationService {
         Location fromDBLocation = locationRepository.save(toDBLocation);
 
 
-        Collection<String> placeList = Arrays.asList(locationDto.getPlaces().split(";"));
-        Collection<Place> placesToAdd = placeList.stream().map(placeName -> new Place().setLocation(fromDBLocation).setName(placeName).setDeleted(false)).collect(Collectors.toList());
+        Collection<String> placeList = Arrays.stream(locationDto.getPlaces().split(",")).map(String::trim).collect(Collectors.toList());
+        Collection<Place> placesToAdd = placeList.stream().map(placeName -> new Place()
+                .setLocation(fromDBLocation)
+                .setName(placeName)
+                .setDeleted(false)
+                .setForElectroCars(Arrays.stream(locationDto.getElectroPlaces().split(",")).map(String::trim).collect(Collectors.toList()))
+        ).collect(Collectors.toList());
         placeService.createPlaces(placesToAdd);
 
         return toDBLocation;
@@ -48,7 +53,9 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public Collection<LocationDto> findAllLocations() {
         return locationRepository.findAllLocations().stream()
-                .map(dbLocation -> new LocationDto(dbLocation, placeService.findPlacesNameByLocation(dbLocation)))
+                .map(dbLocation -> new LocationDto(dbLocation,
+                        placeService.findPlacesNameByLocation(dbLocation),
+                        placeService.findElectroPlacesNameByLocation(dbLocation)))
                 .collect(Collectors.toList());
     }
 
@@ -61,7 +68,9 @@ public class LocationServiceImpl implements LocationService {
             locations = locationRepository.findByAddressContaining(address);
         }
         return locations.stream()
-                .map(dbLocation -> new LocationDto(dbLocation, placeService.findPlacesNameByLocation(dbLocation)))
+                .map(dbLocation -> new LocationDto(dbLocation,
+                        placeService.findPlacesNameByLocation(dbLocation),
+                        placeService.findElectroPlacesNameByLocation(dbLocation)))
                 .collect(Collectors.toList());
     }
 

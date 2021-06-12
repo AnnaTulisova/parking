@@ -125,7 +125,9 @@ public class AdminController {
     @GetMapping("/location-remove/{locationId}")
     public String prepareLocationToDelete(@PathVariable("locationId") Long locationId, WebRequest request, Model model) {
         Location location = locationService.findById(locationId);
-        model.addAttribute("location", new LocationDto(location, placeService.findPlacesNameByLocation(location)));
+        model.addAttribute("location",
+                new LocationDto(location, placeService.findPlacesNameByLocation(location),
+                        placeService.findElectroPlacesNameByLocation(location)));
         return "location-remove";
     }
 
@@ -141,7 +143,9 @@ public class AdminController {
     @GetMapping("/location-edit/{locationId}")
     public String prepareLocationToEdit(@PathVariable("locationId") Long locationId, WebRequest request, Model model) throws IOException {
         Location location = locationService.findById(locationId);
-        LocationDto locationDto = new LocationDto(location, placeService.findPlacesNameByLocation(location));
+        LocationDto locationDto = new LocationDto(location,
+                placeService.findPlacesNameByLocation(location),
+                placeService.findElectroPlacesNameByLocation(location));
         model.addAttribute("location", locationDto);
         return "location-edit";
     }
@@ -164,6 +168,7 @@ public class AdminController {
     @GetMapping("/location-about/{locationId}")
     public String prepareLocationPlaces(@PathVariable("locationId") Long locationId, WebRequest request, Model model) {
         model.addAttribute("places", placeService.findAllByLocationId(locationId));
+        model.addAttribute("locationId", locationId);
         return "location-about";
     }
 
@@ -180,4 +185,36 @@ public class AdminController {
         return  new ModelAndView("location-about")
                 .addObject("places", placeService.findAllByLocationId(locationId));
     }
+    @GetMapping("/place-edit/{placeId}")
+    public String preparePlaceToEdit(@PathVariable("placeId") Long placeId, WebRequest request, Model model) {
+        Place place = placeService.findById(placeId);
+        model.addAttribute("place", place);
+        return "place-edit";
+    }
+
+    @PostMapping("/place-edit")
+    public String editPlace(@ModelAttribute("place") @Valid final Place place, WebRequest request, Model model) {
+        Place dbPlace = placeService.editPlace(place);
+        model.addAttribute("places", placeService.findAllByLocationId(dbPlace.getLocation().getId()));
+        model.addAttribute("locationId", dbPlace.getLocation().getId());
+        return "location-about";
+    }
+
+    @GetMapping("/place-add/{locationId}")
+    public String preparePlaceToAdd(@PathVariable("locationId") Long locationId, WebRequest request, Model model) {
+        model.addAttribute("place", new PlaceDto().setLocationId(locationId.toString()));
+        model.addAttribute("locationId", locationId);
+        return "place";
+    }
+
+    @PostMapping("/place-add")
+    public String addPlace(@ModelAttribute("place") @Valid final PlaceDto place,
+                           WebRequest request, Model model) {
+        Location location = locationService.findById(Long.parseLong(place.getLocationId()));
+        Place dbPlace = placeService.addPlace(place, location);
+        model.addAttribute("places", placeService.findAllByLocationId(dbPlace.getLocation().getId()));
+        model.addAttribute("locationId", dbPlace.getLocation().getId());
+        return "location-about";
+    }
+
 }

@@ -44,9 +44,10 @@ public class ReservationController {
                                                       @RequestParam("startDateTime") String startDateTime,
                                                       @RequestParam("endDateTime") String endDateTime,
                                                       @RequestParam("location") Long locationId,
-                                                      @RequestParam("place") Long placeId) {
+                                                      @RequestParam("place") Long placeId,
+                                                      @RequestParam(value = "forElectroCar", defaultValue = "false", required = false) Boolean forElectroCar) {
         Map<String, Object> result = new HashMap<>();
-        result.put("places", placeService.findFreePlaces(startDateTime, locationId));
+        result.put("places", placeService.findFreePlaces(startDateTime, locationId, forElectroCar));
         result.put("locationImg", "data:image/png;base64," +Base64.getEncoder().encodeToString(locationService.findById(locationId).getPicture()));
         return result;
     }

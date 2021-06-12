@@ -27,7 +27,7 @@
                 <a class="nav-link" th:href="@{/reservation-list-admin}">Все бронирования</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/location-list-admin}">Все локации</a>
+                <a class="nav-link" th:href="@{/location-list-admin}">Все расположения</a>
             </li>
         </ul>
         <div id="logout">
@@ -43,7 +43,7 @@
             <h1>Вы уверены, что хотите удалить расположение?</h1>
         </div>
 
-        <form action="/location-remove" object="${location}" method="POST" enctype="utf8" style="background: aliceblue;">
+        <form action="/location-remove" object="${location}" method="POST" enctype="utf8" style="background: aliceblue; margin: 10px 0">
             <div class="fadeIn second">
                 <div>
                     <label>Адрес: </label>

@@ -77,6 +77,8 @@
             });
         }
 
+        $('#forElectroCar').change(findPlace);
+
         checkDate();
 
         $('#endDateTime').on('input', function() {
@@ -117,6 +119,14 @@
                 <input class="fadeIn second" type="datetime-local" th:field="*{endDateTime}" id="endDateTime" placeholder="Дата и время окончания бронирования"/>
                 <p class="error" th:each="error : ${#fields.errors('endDateTime')}"
                    th:text="${error}">Validation error</p>
+            </div>
+            <div class="fadeIn second">
+                <div>
+                    <div style="display: inline-block; vertical-align: middle; margin: 0 10px;"> Для электромобилей: </div>
+                <input class="fadeIn second" type="checkbox" th:field="*{forElectroCar}" id="forElectroCar" style="display: inline-block; vertical-align: middle;"/>
+                <p class="error" th:each="error : ${#fields.errors('forElectroCar')}"
+                   th:text="${error}">Validation error</p>
+                </div>
             </div>
             <div class="form-group blu-margin fadeIn third" >
                 <select class="form-control fadeIn third" th:field="*{location}"  id="dropLocation" th:disabled="!${startDateTime} or !${endDateTime}">
